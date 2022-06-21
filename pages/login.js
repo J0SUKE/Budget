@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from 'next/router'
 import {userContext} from '../Context/UserContext';
 import Layout from "../components/Layout/Layout";
+import Login from "../components/Login/Login";
 
 export default function LoginPage() 
 {
@@ -37,26 +38,13 @@ export default function LoginPage()
   }
   
   return (
-    <Layout>
-      <form onSubmit={(e)=>connect(e)}>
-          <div>
-              <label htmlFor="">email</label>
-              <input type="email" value={email} onInput={(e)=>setEmail(e.target.value)}/>            
-          </div>
-          <div>
-              <label htmlFor="">password</label>
-              <input type="password" value={password} onInput={(e)=>setPassword(e.target.value)}/>
-          </div>
-          {
-            errorMessage &&
-            <div>
-                <p style={{color:'red'}}>{errorMessage}</p>
-            </div>
-          }
-          <div>
-              <input type="submit" value={'signUp'}/>
-          </div>
-      </form>
-    </Layout>
+    <Login 
+        connect={connect} 
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        errorMessage={errorMessage}
+      />      
   )
 }
