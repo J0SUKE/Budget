@@ -1,12 +1,13 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useContext, useState } from "react";
 import {auth} from '../firebase/firebase-config';
 import { useRouter } from 'next/router'
 import {userContext} from '../Context/UserContext';
+import Layout from "../components/Layout/Layout";
 
 
-export default function SignupPage() {
-    
+export default function SignupPage() 
+{    
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [errorMessage,setErrorMessage] = useState(null);
@@ -17,11 +18,9 @@ export default function SignupPage() {
         e.preventDefault();
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            // Signed in 
             setErrorMessage(null);
             setUser(userCredential.user);
             router.push('/dashboard');
-            // ...
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -35,7 +34,8 @@ export default function SignupPage() {
     
     
     return (
-      <form onSubmit={(e)=>signIn(e)}>
+      <Layout>
+        <form onSubmit={(e)=>signIn(e)}>
           <div>
               <label htmlFor="">email</label>
               <input type="email" value={email} onInput={(e)=>setEmail(e.target.value)}/>            
@@ -54,6 +54,7 @@ export default function SignupPage() {
               <input type="submit" value={'signUp'}/>
           </div>
       </form>
+      </Layout>
     )
   }
   

@@ -3,6 +3,7 @@ import {auth} from '../firebase/firebase-config';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from 'next/router'
 import {userContext} from '../Context/UserContext';
+import Layout from "../components/Layout/Layout";
 
 export default function LoginPage() 
 {
@@ -36,7 +37,8 @@ export default function LoginPage()
   }
   
   return (
-    <form onSubmit={(e)=>connect(e)}>
+    <Layout>
+      <form onSubmit={(e)=>connect(e)}>
           <div>
               <label htmlFor="">email</label>
               <input type="email" value={email} onInput={(e)=>setEmail(e.target.value)}/>            
@@ -55,5 +57,6 @@ export default function LoginPage()
               <input type="submit" value={'signUp'}/>
           </div>
       </form>
+    </Layout>
   )
 }
