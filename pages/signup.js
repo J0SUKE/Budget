@@ -4,7 +4,8 @@ import {auth} from '../firebase/firebase-config';
 import { useRouter } from 'next/router'
 import {userContext} from '../Context/UserContext';
 import Layout from "../components/Layout/Layout";
-
+import {setDoc,doc } from "firebase/firestore"; 
+import { db } from "../firebase/firebase-config";
 
 export default function SignupPage() 
 {    
@@ -19,12 +20,19 @@ export default function SignupPage()
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             setErrorMessage(null);
-            setUser(userCredential.user);
+            setUser(userCredential.user);            
+
+            setDoc(doc(db, "users", `${userCredential.user.uid}`), {
+                email: email,
+              });            
+        })
+        .then(()=>{            
             router.push('/dashboard');
         })
         .catch((error) => {
+            
+            console.log(error);
             const errorCode = error.code;
-            const errorMessage = error.message;
             
             if (errorCode=="auth/email-already-in-use") {
                 setErrorMessage("Email already in use");
