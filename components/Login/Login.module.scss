@@ -66,7 +66,6 @@
 
 .content
 {
-    border: 2px solid #EBF5FF;
     border-radius: 10px;
     width: 90%;
     max-width: 900px;
@@ -76,20 +75,24 @@
     {
         width: 50%;
         padding: 7%;
-        height: 500px;
+        height: 550px;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        border: 2px solid #EBF5FF;
+        border-radius:  0 10px 10px 0;
 
         &__top
         {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 1rem;
             max-width: 350px;
             width: 100%;
             h2{
-                font-weight: 800;
+                font-weight: 900;
+                color: #202d4a;
             }
             button{
                 border: none;
@@ -117,10 +120,40 @@
             font-weight: 600;
             font-size: .9rem;
         }
+        .successMesg
+        {
+            padding: 1.1rem;
+            border-radius: 6px;   
+            font-weight: 600;
+            font-size: .9rem;
+            display: block;
+            background: #28a745;
+            color: white;
+            opacity: 0.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &>p{
+            margin: 1rem 0;
+            color: rgb(109, 109, 109);
+            font-size: .9rem;
+            line-height: 1.3rem;
+            text-align: center;
+        }
+
+        &>span{
+            display: block;
+            text-align: center;
+            margin: 1rem 0;
+            color: rgb(109, 109, 109);
+        }
 
         form{
             height: 320px;
-            div:not(:last-of-type){
+            
+            .input_field{
                 height: 80px;
                 border-radius: 10px;
                 margin: 1rem 0;
@@ -137,7 +170,7 @@
                     background: transparent;
                     &::placeholder 
                     {
-                        color: rgb(140, 140, 140)
+                        color: #92a3b7;
                     }
                 }
                 label{
@@ -145,7 +178,7 @@
                     font-size: .8rem;
                 }
             }
-            div:last-of-type
+            section
             {
                 display: flex;
                 justify-content: center;
@@ -175,12 +208,14 @@
     &__left
     {
         width: 50%;
-        height: 500px;
+        height: 550px;
         background: #EBF5FF;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         flex-direction: column;
         align-items: center;
+        padding-top: 8rem;
+        border-radius:  10px 0px 0 10px;
         h2{
             color: #202d4a;
             font-weight: 800;
@@ -215,14 +250,30 @@
         {
             width: 100%;
             max-width: 350px;
-            padding: 0;
+            padding: 8% 0 10% 0;
+            border: none;
         }
         &__left
         {
             width: 100%;
+            border-radius:0px;
             p,button{
                 max-width: 350px;
             }
         }
+    }
+}
+
+.cards_container
+{
+    height: 100%;
+    width: 90%;
+    position: relative;
+    img{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        max-height: 204px;
+        object-fit: contain;
     }
 }

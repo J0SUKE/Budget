@@ -1,0 +1,20 @@
+.google_btn
+    {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 1px 3px rgba(164, 164, 164, 0.801);
+        //margin: 1rem 0;
+        padding: 1rem;
+        border-radius: 5px;
+        //border: 1px solid black;
+        img{
+            width: 24px;
+        }
+        cursor: pointer;
+        p{
+            color: rgb(151, 151, 151);
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+    }

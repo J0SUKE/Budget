@@ -28,11 +28,16 @@ export default function LoginPage()
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      console.log(errorCode);
       if (errorCode=="auth/wrong-password") {
         setErrorMessage("Wrong password");
       }
       else if (errorCode=="auth/user-not-found") {
         setErrorMessage("User not found");
+      }
+      else if(errorCode=="auth/invalid-email")
+      {
+        setErrorMessage("Invalid email format");
       }
     });
   }
@@ -45,6 +50,8 @@ export default function LoginPage()
         password={password}
         setPassword={setPassword}
         errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+        setUser={setUser}
       />      
   )
 }
