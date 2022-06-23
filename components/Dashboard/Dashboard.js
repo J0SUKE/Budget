@@ -1,17 +1,30 @@
 import {auth} from '../../firebase/firebase-config';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { collection, addDoc, getDoc,doc,query, where, getDocs  } from "firebase/firestore"; 
+import React, { useContext, useEffect, useState } from 'react';
+import { collection, addDoc, orderBy,query, where, getDocs  } from "firebase/firestore"; 
 import { db } from '../../firebase/firebase-config';
+import {userContext} from '../../Context/UserContext';
+import LateralMenu from './LateralMenu/LateralMenu';
+import Header from './Header/Header';
+import { ThemeCntxt } from '../../Context/ThemeContext';
+import style from './Dashboard.module.scss'
+import Budgets from './Budgets/Budgets';
+import Hero from './Hero/Hero';
+import Expenses from './Expenses/Expenses';
+import ExpenseModale from './Modale/ExpenseModale';
+import Graphic from './Graphic/Graphic';
 
-export default function Dashboard({user}) {  
+export default function Dashboard() {  
 
+  const {user,setUser} = useContext(userContext);
   const router = useRouter();
   const [accountInput,setAccountInput] = useState({name:"",sum:0});
-  const [expensesInput,setExpensesInput] = useState({name:"",sum:"",time:""});
   const [expenses,setExpenses] = useState([]);
+  const [visible,setVisible] = useState(false); // lateral menu
+  const{setDark,dark} = useContext(ThemeCntxt);
+  const [expenseModale,setExpenseModale] = useState(false);
+  const [mobileLayout,setMobileLayout] = useState((window.innerWidth<=750));
 
-  
   function logOut() 
   {
     window.localStorage.setItem('user',JSON.stringify(null));
@@ -27,27 +40,9 @@ export default function Dashboard({user}) {
       sum:accountInput.sum
     })    
   }
-  
-  function addExpense(e) {
-    e.preventDefault();
-
-    let expDoc = addDoc(collection(db,`users/${user.uid}/expenses`),{
-      name:expensesInput.name,
-      sum:expensesInput.sum,
-      time:expensesInput.time
-    }).then(docRef=>{
-      
-      setExpenses(exp=>[...exp,{
-        name:expensesInput.name,
-        sum:expensesInput.sum,
-        time:expensesInput.time,
-        id:docRef._key.path.segments[3]        
-      }])
-    })
-  }
 
   function getExpenses() {
-    const q = query(collection(db, `users/${user.uid}/expenses`));
+    const q = query(collection(db, `users/${user.uid}/expenses`),orderBy("createdAt","desc"));
     
 
     let data = [];
@@ -68,73 +63,41 @@ export default function Dashboard({user}) {
   
   useEffect(()=>{
     getExpenses();
+
+    window.addEventListener("resize",()=>{
+      if (window.innerWidth<=750) setMobileLayout(true);
+      else setMobileLayout(false);
+    })
   },[])
 
     return (
     <>
-        <div>The current User is : {user.email}</div>
-        <button onClick={logOut}>Sign out</button>
-        <h2>Ajouter un compte</h2>
-        <form action="" onSubmit={(e)=>{addAccount(e)}}>
-          <div>
-            <label htmlFor="">Nom du compte</label>
-            <input type="text" value={accountInput.name} onInput={(e)=>setAccountInput((acc)=>({
-              ...acc,
-              name:e.target.value
-            }))}/>
-          </div>
-          <div>
-            <label htmlFor="">somme sur le compte</label>
-            <input type="number" value={accountInput.sum} onInput={(e)=>setAccountInput((acc)=>({
-              ...acc,
-              sum:e.target.value
-            }))}/>
-          </div>
-          <div>
-            <input type="submit" value={'add account'}/>
-          </div>
-        </form>
-        <h2>Ajouter une dépense</h2>
-        <form action="" onSubmit={(e)=>addExpense(e)}>
-          <div>
-            <label htmlFor="">Nom</label>
-            <input type="name" value={expensesInput.name} onInput={(e)=>setExpensesInput(exp=>({
-              ...exp,
-              name:e.target.value
-            }))}/>
-          </div>
-          <div>
-            <label htmlFor="">Somme</label>
-            <input type="number" value={expensesInput.sum} onInput={(e)=>setExpensesInput(exp=>({
-              ...exp,
-              sum:e.target.value
-            }))}/>
-          </div>
-          <div>
-            <label htmlFor="">time</label>
-            <input type="date" value={expensesInput.time} onInput={(e)=>setExpensesInput(exp=>({
-              ...exp,
-              time:e.target.value
-            }))}/>
-          </div>
-          <div>
-            <input type="submit" value='Add'/>
-          </div>
-        </form>
-        <main>
-          <h2>Dépenses</h2>
-          <ul>
+        <button className={style.toggleTheme} onClick={()=>{setDark(dark=>!dark)}}>toggle</button>
+        <Header visible={visible} setVisible={setVisible}/>
+        <LateralMenu visible={visible} setVisible={setVisible}/>
+        {
+          !mobileLayout &&
+          <Budgets expenseModale={expenseModale} layout={style.desktop} setExpenseModale={setExpenseModale}/>
+        }
+                
+        {visible && <div className={style.overlay} onClick={()=>setVisible(false)}></div>}
+        {expenseModale && <div className={style.overlay} onClick={()=>setExpenseModale(false)}></div>}
+        {expenseModale && <ExpenseModale setExpenses={setExpenses}/>}
+        
+        
+        
+        <div className={`${style.main} ${dark ? style.dark : style.light}`}>
+          <Hero/>
+          <div className={style.data_zone}>
+            <Expenses expenses={expenses} />
+            <Graphic/>
             {
-              expenses.map(exp=>(
-                <li key={exp.id}>
-                  <h4>{exp.name}</h4>
-                  <p>{exp.sum}</p>
-                  <span>{exp.time}</span>
-                </li>
-              ))
+              mobileLayout &&
+              <Budgets expenseModale={expenseModale} layout={style.mobile} setExpenseModale={setExpenseModale}/>
             }
-          </ul>
-        </main>
+          </div>
+        </div>      
     </>
   )
 }
+

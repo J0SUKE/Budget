@@ -23,15 +23,13 @@ export default function DashboardPage() {
 
     return (
     <>
-        <Layout>
         {
             user?
-            <Dashboard user={user}/>
+            <Dashboard/>
             :
             null
 
         }
-        </Layout>
     </>
   )
 }
