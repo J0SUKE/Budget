@@ -17,7 +17,7 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets})
     function addExpense(e) {
         e.preventDefault();
 
-        // promesse qui ajoute la depense dans la 
+        // promesse qui ajoute la depense dans la bdd puis met a jour le state
 
         let expDoc = addDoc(collection(db,`users/${user.uid}/expenses`),{
           name:nameRef.current.value,
@@ -34,21 +34,21 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets})
             time:dateRef.current.value,          
             id:docRef._key.path.segments[3]        
           },...exp])
+        }).catch((error)=>{
+          console.log(error);
         })
 
         
-        let currentBdgt = budgets.filter(item=>item.name==budgetRef.current.value)[0];
+        let currentBdgt = budgets.filter(item=>item.name==budgetRef.current.value)[0];//budget actuel
 
-
-        let budgetDoc = doc(db,`users/${user.uid}/budgets`,`${budgetRef.current.value}`)
+        let budgetDoc = doc(db,`users/${user.uid}/budgets`,`${budgetRef.current.value}`)        
         
-        console.log(currentBdgt.sum,parseFloat(sumRef.current.value));
+        // promesse qui met a jour le budget de la derniere depense
 
         let updateBudget = updateDoc(budgetDoc,{
           sum:parseFloat(currentBdgt.sum)+parseFloat(sumRef.current.value)
         }).then((docRef)=>{
           
-          console.log(parseFloat(currentBdgt.sum),parseFloat(sumRef.current.value));
           
           setBudgets(budgets=>budgets.map(item=>{
             if (item.name == budgetRef.current.value) {
@@ -59,6 +59,8 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets})
             }
             else return item;
           }))
+        }).catch((error)=>{
+          console.log(error);
         })
       } 
 

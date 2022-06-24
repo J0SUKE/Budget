@@ -25,6 +25,8 @@ export default function BudgetModale({setBudgets}) {
                 name:nameInput.current.value,
                 sum:sumInput.current.value,
           },...exp])
+        }).catch((error)=>{
+          console.log(error);
         })
       } 
   

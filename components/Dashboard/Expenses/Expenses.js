@@ -16,7 +16,12 @@ export default function Expenses({expenses}) {
               expenses.map(exp=>(
                 <li key={exp.id}>
                   <div className={style.icon} style={{background:getColor(exp.budget,0.2)}}>
-                    <img src={`/images/icons/${exp.budget}.svg`} alt="" />
+                    {
+                      colors[exp.budget] ?
+                      <img src={`/images/icons/${exp.budget}.svg`} alt=""/>
+                      :
+                      <img src={`/images/icons/perso.svg`} alt=""/>
+                    }
                   </div>
                   <div className={style.info}>
                     <h4 className={`${dark ? style.dark : style.light}`}>{exp.name}</h4>

@@ -14,18 +14,26 @@ import Expenses from './Expenses/Expenses';
 import ExpenseModale from './Modale/ExpenseModale';
 import Graphic from './Graphic/Graphic';
 import BudgetModale from './Modale/BudgetModale';
+import CardModale from './Modale/CardModale';
 
 export default function Dashboard() {  
 
   const {user,setUser} = useContext(userContext);
+  const{setDark,dark} = useContext(ThemeCntxt);
   const router = useRouter();
-  const [accountInput,setAccountInput] = useState({name:"",sum:0});
+
   const [expenses,setExpenses] = useState([]);
   const [budgets,setBudgets] = useState([]);
+  const [cards,setCards] = useState([]);
+  
   const [visible,setVisible] = useState(false); // lateral menu
-  const{setDark,dark} = useContext(ThemeCntxt);
+  
+  //modales 
   const [expenseModale,setExpenseModale] = useState(false);
   const [budgetsModale,setBudgetsModale] = useState(false);
+  const [cardsModale,setCardsModale] = useState(false);
+  
+  //layout
   const [mobileLayout,setMobileLayout] = useState((window.innerWidth<=750));
 
   function logOut() 
@@ -35,14 +43,6 @@ export default function Dashboard() {
     router.push('/login');
   }
 
-  function addAccount(e) {
-    e.preventDefault();
-    
-    const docRef = addDoc(collection(db,`users/${user.uid}/accounts`),{
-      name:accountInput.name,
-      sum:accountInput.sum
-    })    
-  }
 
   function getExpenses() {
     const q = query(collection(db, `users/${user.uid}/expenses`),orderBy("createdAt","desc"));
@@ -80,10 +80,28 @@ export default function Dashboard() {
       setBudgets([...data]);
     })
   }
+  function getCards() {
+    const q = query(collection(db, `users/${user.uid}/cards`),orderBy("lastUse","desc"));
+    
+    let data = [];
+    const docSnap = getDocs(q)
+    .then(res=>{
+      res.forEach(element => {
+        data.push({
+          ...element.data(),
+          id:element._document.key.path.segments[8]
+        })
+      });
+    })
+    .then(()=>{
+      setCards([...data]);
+    })
+  }
   
   useEffect(()=>{
     getExpenses();
     getBudgets();
+    getCards();
     window.addEventListener("resize",()=>{
       if (window.innerWidth<=750) setMobileLayout(true);
       else setMobileLayout(false);
@@ -109,21 +127,22 @@ export default function Dashboard() {
         
         
         {visible && <div className={style.overlay} onClick={()=>setVisible(false)}></div>}
-        {(expenseModale || budgetsModale) && 
+        {(expenseModale || budgetsModale || cardsModale) && 
           <div className={style.overlay} 
             onClick={()=>{
               setExpenseModale(false)
               setBudgetsModale(false)
+              setCardsModale(false);
             }}></div>
         }
         {expenseModale && <ExpenseModale setExpenses={setExpenses} budgets={budgets} setBudgets={setBudgets}/>}
         
         {budgetsModale && <BudgetModale setBudgets={setBudgets}/>}
 
-        
+        {cardsModale && <CardModale setCardsModale={setCardsModale}/>}
         
         <div className={`${style.main} ${dark ? style.dark : style.light}`}>
-          <Hero/>
+          <Hero setCardsModale={setCardsModale} cards={cards}/>
           <div className={style.data_zone}>
             <Expenses expenses={expenses} />
             <Graphic/>

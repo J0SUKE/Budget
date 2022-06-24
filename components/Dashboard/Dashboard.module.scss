@@ -20,9 +20,9 @@ $red:#c52c2c;
 
 .budgets
 {
-    overflow-y: scroll;
-    background-color: transparent transparent;
-    &::-webkit-scrollbar{display: none;}
+    //overflow-y: scroll;
+    // scrollbar-color: transparent transparent;
+    // &::-webkit-scrollbar{display: none;}
     &>img{
         width: 100%;
     }
@@ -401,7 +401,31 @@ $red:#c52c2c;
             height: 150px;;
             width: 220px;
             border-radius: 20px;
-            background: rgb(4, 4, 40);
+            padding: 2rem 1.5rem 1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            img{
+                width: 25px;
+                margin-top: .5rem;
+            }
+            h1{
+                color: white;
+                font-size: 1.2rem;
+            }
+            div{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            p{
+                color: lightgray;
+                font-size: .8rem;
+            }
+            span{
+                color: lightgray;
+                font-size: .7rem;
+            }
         }
         .add_card
         {
@@ -598,6 +622,13 @@ $red:#c52c2c;
     left: 50%;
     transform: translate(-50%,-50%);
     padding: 2rem;
+    form{
+        width: 350px;
+        div{
+            display: flex;
+            justify-content: space-between;
+        }
+    }
 }
 
 .stats
