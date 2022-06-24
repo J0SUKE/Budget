@@ -20,6 +20,13 @@ $red:#c52c2c;
 
 .budgets
 {
+    overflow-y: scroll;
+    background-color: transparent transparent;
+    &::-webkit-scrollbar{display: none;}
+    &>img{
+        width: 100%;
+    }
+
     &.desktop
     {
         width: 300px;
@@ -32,7 +39,6 @@ $red:#c52c2c;
     {
         position: static;
         margin-top: 2rem;
-        height: 400px;
         width: 100%;
     }
     padding: 2rem;
@@ -54,7 +60,115 @@ $red:#c52c2c;
         border-radius: 10px;
         color: white;
         font-weight: 600;
+        margin-top: 1rem;
         cursor: pointer;
+    }
+
+    .budget_section
+    {
+        margin-top: 2rem;
+        &>div{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            &.light{
+                color: $dark-gray-main;
+            }
+            &.dark{
+                color: $light-gray-right;
+            }
+            p{
+                font-size: .9rem;
+            }
+        }
+        &>section{
+            border-radius: 10px;
+            overflow-y: hidden;
+            margin-top: 1rem;
+        }
+        ul{            
+            height: 100%;
+            li{
+                height: 60px;
+                margin: 1rem 0;
+                width: 100%;
+                border-radius: 10px;
+                display: flex;
+                overflow: hidden;
+                .logo
+                {
+                    width: 60%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    svg,img{
+                        width: 20px;
+                        // car : crimson
+                        //grocery : steelblue
+                        //hobbies : teal
+                        //home : slateblue
+                        //phone : seagreen
+                        //plane : midnightblue
+                        //savings : indianred
+                        //transport : mediumseagreen
+                        //travel : dodgerblue
+                    }
+                    p{
+                        margin-left: .5rem;
+                        font-size: .9rem;
+                        font-weight: 600;
+                    }
+                }            
+                
+                .sum
+                {
+                    display: flex;
+                    width: 40%;
+                    justify-content: center;
+                    align-items: center;
+                    background:rgb(226, 226, 226);
+                    font-weight: 600;
+                    &.light{
+                        color: $dark-gray-main;
+                        background:rgb(226, 226, 226);;
+                    }
+                    &.dark{
+                        color: $light-gray-right;
+                        background: $dark-gray-main;
+                    }
+                }
+            }
+        }
+        .add_budget
+        {
+            height: 60px;
+            width: 100%;
+            border-style: dashed;
+            border-radius: 10px;
+            border-color: $gray-btns-dark;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            &.light
+            {
+                color: $dark-gray-main;
+                &:hover
+                {
+                    background: rgba(0, 0, 0, 0.1);
+                }
+            }
+            &.dark
+            {
+                color: $light-gray1-left;
+                &:hover
+                {
+                    background: rgba(255, 255, 255, 0.1);
+                }
+            }
+        }
     }
 }
 
@@ -296,7 +410,7 @@ $red:#c52c2c;
             width: 220px;
             border-radius: 20px;
             border-style:dashed;
-            border-color: lightgray;
+            border-color: $gray-btns-dark;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -373,7 +487,7 @@ $red:#c52c2c;
     max-width: 400px;
     height: 400px;
     border-radius: 15px;
-    padding: 15px .5rem;
+    padding: 15px 0;
     &.light{background: $light-gray-right;}
     &.dark{background: $dark-gray-right;}
     ul{
@@ -392,7 +506,12 @@ $red:#c52c2c;
                 height: 35px;
                 width: 35px;
                 border-radius: 9px;
-                border: 1px solid black;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img{
+                    width: 20px;
+                }
             }
             .info
             {
@@ -437,19 +556,20 @@ $red:#c52c2c;
                 font-weight: 600;
             }
         }
-        &::-webkit-scrollbar 
-        {
-            width: 5px;
-        }
-        
-        /* Track */
-        
-        
-        /* Handle */
-        &::-webkit-scrollbar-thumb {
-            display: none;
-        }
-        scrollbar-color: transparent transparent;
+        &::-webkit-scrollbar {
+            width: 6px;
+          }
+          
+          /* Track */
+          &::-webkit-scrollbar-track {
+            background: transparent;
+          }
+          
+          /* Handle */
+          &::-webkit-scrollbar-thumb {
+            background: rgba(136, 136, 136, 0.407);
+            border-radius: 3px;
+          }
               
     }
 

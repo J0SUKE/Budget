@@ -13,6 +13,7 @@ import Hero from './Hero/Hero';
 import Expenses from './Expenses/Expenses';
 import ExpenseModale from './Modale/ExpenseModale';
 import Graphic from './Graphic/Graphic';
+import BudgetModale from './Modale/BudgetModale';
 
 export default function Dashboard() {  
 
@@ -20,9 +21,11 @@ export default function Dashboard() {
   const router = useRouter();
   const [accountInput,setAccountInput] = useState({name:"",sum:0});
   const [expenses,setExpenses] = useState([]);
+  const [budgets,setBudgets] = useState([]);
   const [visible,setVisible] = useState(false); // lateral menu
   const{setDark,dark} = useContext(ThemeCntxt);
   const [expenseModale,setExpenseModale] = useState(false);
+  const [budgetsModale,setBudgetsModale] = useState(false);
   const [mobileLayout,setMobileLayout] = useState((window.innerWidth<=750));
 
   function logOut() 
@@ -60,10 +63,27 @@ export default function Dashboard() {
       setExpenses([...data]);
     })
   }
+  function getBudgets() {
+    const q = query(collection(db, `users/${user.uid}/budgets`),orderBy("createdAt","desc"));
+    
+    let data = [];
+    const docSnap = getDocs(q)
+    .then(res=>{
+      res.forEach(element => {
+        data.push({
+          ...element.data(),
+          id:element._document.key.path.segments[8]
+        })
+      });
+    })
+    .then(()=>{
+      setBudgets([...data]);
+    })
+  }
   
   useEffect(()=>{
     getExpenses();
-
+    getBudgets();
     window.addEventListener("resize",()=>{
       if (window.innerWidth<=750) setMobileLayout(true);
       else setMobileLayout(false);
@@ -77,13 +97,29 @@ export default function Dashboard() {
         <LateralMenu visible={visible} setVisible={setVisible}/>
         {
           !mobileLayout &&
-          <Budgets expenseModale={expenseModale} layout={style.desktop} setExpenseModale={setExpenseModale}/>
+          <Budgets 
+            expenseModale={expenseModale} 
+            layout={style.desktop} 
+            setExpenseModale={setExpenseModale}
+            budgets={budgets}
+            budgetsModale={budgetsModale}
+            setBudgetsModale={setBudgetsModale}
+          />
         }
-                
-        {visible && <div className={style.overlay} onClick={()=>setVisible(false)}></div>}
-        {expenseModale && <div className={style.overlay} onClick={()=>setExpenseModale(false)}></div>}
-        {expenseModale && <ExpenseModale setExpenses={setExpenses}/>}
         
+        
+        {visible && <div className={style.overlay} onClick={()=>setVisible(false)}></div>}
+        {(expenseModale || budgetsModale) && 
+          <div className={style.overlay} 
+            onClick={()=>{
+              setExpenseModale(false)
+              setBudgetsModale(false)
+            }}></div>
+        }
+        {expenseModale && <ExpenseModale setExpenses={setExpenses} budgets={budgets} setBudgets={setBudgets}/>}
+        
+        {budgetsModale && <BudgetModale setBudgets={setBudgets}/>}
+
         
         
         <div className={`${style.main} ${dark ? style.dark : style.light}`}>
@@ -93,7 +129,14 @@ export default function Dashboard() {
             <Graphic/>
             {
               mobileLayout &&
-              <Budgets expenseModale={expenseModale} layout={style.mobile} setExpenseModale={setExpenseModale}/>
+              <Budgets 
+                expenseModale={expenseModale} 
+                layout={style.desktop} 
+                setExpenseModale={setExpenseModale}
+                budgets={budgets}
+                budgetsModale={budgetsModale}
+                setBudgetsModale={setBudgetsModale}
+              />
             }
           </div>
         </div>      
