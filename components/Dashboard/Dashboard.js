@@ -27,7 +27,10 @@ export default function Dashboard() {
   const [cards,setCards] = useState([]);
   
   const [visible,setVisible] = useState(false); // lateral menu
-  
+
+  const [loss,setLoss] = useState(0);
+  const [gain,setGain] = useState(0);
+
   //modales 
   const [expenseModale,setExpenseModale] = useState(false);
   const [budgetsModale,setBudgetsModale] = useState(false);
@@ -135,14 +138,23 @@ export default function Dashboard() {
             }}></div>
         }
         {expenseModale && 
-        <ExpenseModale setExpenses={setExpenses} budgets={budgets} setBudgets={setBudgets} cards={cards}/>}
+        <ExpenseModale 
+          setExpenses={setExpenses} budgets={budgets} setBudgets={setBudgets} cards={cards} setCards={setCards}/>}
         
         {budgetsModale && <BudgetModale setBudgets={setBudgets}/>}
 
-        {cardsModale && <CardModale setCardsModale={setCardsModale}/>}
+        {cardsModale && <CardModale setCardsModale={setCardsModale} setCards={setCards}/>}
         
         <div className={`${style.main} ${dark ? style.dark : style.light}`}>
-          <Hero setCardsModale={setCardsModale} cards={cards}/>
+          <Hero 
+              setCardsModale={setCardsModale} 
+              cards={cards} 
+              expenses={expenses} 
+              setLoss={setLoss} 
+              setGain={setGain}
+              loss={loss}
+              gain={gain}
+          />
           <div className={style.data_zone}>
             <Expenses expenses={expenses} />
             <Graphic/>

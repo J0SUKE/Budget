@@ -5,7 +5,7 @@ import { db } from '../../../firebase/firebase-config';
 import {userContext} from '../../../Context/UserContext';
 import moment from 'moment';
 
-export default function ExpenseModale({setExpenses,budgets,setBudgets,cards}) 
+export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setCards}) 
 {
     
     const {user} = useContext(userContext);
@@ -21,12 +21,13 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards})
         if (!checkInput({nameRef,sumRef,budgetRef,cardRef,dateRef},setErrorMessage,budgets,cards)) return;
 
         // promesse qui ajoute la depense dans la bdd puis met a jour le state
-
         let expDoc = addDoc(collection(db,`users/${user.uid}/expenses`),{
           name:nameRef.current.value,
           sum:sumRef.current.value,
           budget:budgetRef.current.value,
-          time:dateRef.current.value,          
+          time:dateRef.current.value,           
+          card:cardRef.current.value,         
+          color:budgets.filter(item=>item.name==budgetRef.current.value)[0].color,
           createdAt:new Date().getTime()  
         }).then(docRef=>{
           
@@ -34,7 +35,9 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards})
             name:nameRef.current.value,
             sum:sumRef.current.value,
             budget:budgetRef.current.value,
+            card:cardRef.current.value,
             time:dateRef.current.value,          
+            color:budgets.filter(item=>item.name==budgetRef.current.value)[0].color,
             id:docRef._key.path.segments[3]        
           },...exp])
         }).catch((error)=>{
@@ -56,8 +59,8 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards})
           setBudgets(budgets=>budgets.map(item=>{
             if (item.name == budgetRef.current.value) {
               return ({
-                name:budgetRef.current.value,
-                sum:parseFloat(currentBdgt.sum)+parseFloat(sumRef.current.value),
+                ...item,
+                sum:item.sum+parseFloat(sumRef.current.value),
               })
             }
             else return item;
@@ -65,7 +68,30 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards})
         }).catch((error)=>{
           console.log(error);
         })
+
+        // promesse qui met a jour le compte de la derniere reponse
+        let currentCard = cards.filter(item=>cardRef.current.value==item.name)[0];//budget actuel
+        let cardDoc = doc(db,`users/${user.uid}/cards`,`${currentCard.name}`);
+        
+        let updateCard = updateDoc(cardDoc,{
+          balance:currentCard.balance+parseFloat(sumRef.current.value),
+          lastUse:new Date().getTime()
+        }).then(()=>{
+          
+          setCards(cards=>cards.map(item=>{
+            if (item.name==currentCard.name) {
+              return({
+                ...item,
+                balance:parseFloat(item.balance)+parseFloat(sumRef.current.value),
+                lastUse:new Date().getTime()
+              })
+            }
+            else return item;
+          }))
+        })
+        
       } 
+
 
     return (
     <ModaleLayout>
@@ -84,7 +110,7 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards})
               <datalist id="budgets">
                 {
                   budgets.map(item=>(
-                    <option value={item.name}/>
+                    <option key={Math.random()*100}  value={item.name}/>
                   ))
                 }                              
               </datalist>
@@ -95,7 +121,7 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards})
               <datalist id="cards">
                 {
                   cards.map(item=>(
-                    <option value={item.name}/>
+                    <option key={Math.random()*100} value={item.name}/>
                   ))
                 }                              
               </datalist>
@@ -173,7 +199,7 @@ function checkInput(inputs,setErrorMessage,budgets,cards)
     setErrorMessage('please set a date');
     return false;
   }
-  if (!moment(date, "MM/DD/YYYY", false).isValid()) {
+  if (!moment(date, "YYYY/MM/DD", false).isValid()) {
     setErrorMessage('please set valid a date');
     return false;
   }

@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import {userContext} from "../../../Context/UserContext";
 import { useContext } from "react";
 
-export default function CardModale({setCardsModale}) {
+export default function CardModale({setCardsModale,setCards}) {
     
     
     const {user} = useContext(userContext);
@@ -25,7 +25,18 @@ export default function CardModale({setCardsModale}) {
             createdAt:new Date().getTime()  
           }).then((docRef)=>{
             console.log(docRef);
-          }).catch((error)=>{
+          }).then(()=>{
+            setCards((cards)=>([
+                {
+                    name:nameInput.current.value,
+                    balance:balanceInput.current.value,
+                    color:colorInput.current.value,
+                    lastUse:new Date().getTime(),
+                    createdAt:new Date().getTime()  
+                },...cards
+            ]))
+          })
+          .catch((error)=>{
             console.log(error);
           })
     }

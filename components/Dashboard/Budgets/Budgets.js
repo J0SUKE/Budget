@@ -26,7 +26,7 @@ export default function Budgets({setExpenseModale,layout,budgets,setBudgetsModal
           <ul>
               {
                 budgets.map(item=>(
-                  <Budget key={item.name} name={item.name} sum={item.sum}/>
+                  <Budget key={item.name} name={item.name} sum={item.sum} color={item.color}/>
                 ))
               }
           </ul>
@@ -43,21 +43,19 @@ export default function Budgets({setExpenseModale,layout,budgets,setBudgetsModal
 }
 
 
-function Budget({name,sum}) {
+function Budget({name,sum,color}) {
   
   const {dark} = useContext(ThemeCntxt);
 
   return (
     <li>
-      <div className={style.logo} style={{background:getColor(name,0.2,colors)}}>        
+      <div className={style.logo} style={{background:(color? `${color}33` : getColor(name,0.2,colors))}}>        
         {
-          colors[name] ?
+          colors[name] &&
           <img src={`/images/icons/${name}.svg`} alt=""/>
-          :
-          <img src={`/images/icons/perso.svg`} alt=""/>
         }
         
-        <p style={{color:getColor(name,1,colors)}}>{name}</p>
+        <p style={{color:(color? color : getColor(name,1,colors))}}>{name}</p>
       </div>
       <div className={`${style.sum} ${dark ? style.dark : style.light}`}>
         <p>$ {parseFloat(sum).toFixed(2)}</p>

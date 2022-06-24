@@ -1,29 +1,37 @@
 import ModaleLayout from "./ModaleLayout"
 import {userContext} from "../../../Context/UserContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useRef } from "react";
 import { setDoc,collection,doc } from 'firebase/firestore';
 import { db } from '../../../firebase/firebase-config';
+import {colors} from '../../../utils/Colors'
 
 export default function BudgetModale({setBudgets}) {
     const {user} = useContext(userContext);
-    const nameInput = useRef();
+    const defaultNameInput = useRef();
+    const customNameInput = useRef();
     const sumInput = useRef();
+    const colorInput = useRef();
+    const [usingCustom,setUsingCustom] = useState(false);
 
     function addbudget(e) 
-    {
+    {        
         e.preventDefault();
-    
-        let expDoc = setDoc(doc(collection(db,`users/${user.uid}/budgets`),`${nameInput.current.value}`),{
-          name:nameInput.current.value,
+        let namevalue = !usingCustom ? customNameInput.current.value : defaultNameInput.current.value;
+
+        let expDoc = doc(collection(db,`users/${user.uid}/budgets`),`${namevalue}`);
+        let expDocAdd = setDoc(expDoc,{
+          name:namevalue,
           sum:sumInput.current.value,
+          color:(usingCustom ? null : colorInput.current.value),
           createdAt:new Date().getTime()  
         }).then(docRef=>{
           
             console.log(docRef);
             setBudgets(exp=>[{
-                name:nameInput.current.value,
+                name:namevalue,
                 sum:sumInput.current.value,
+                color:(usingCustom ? null : colorInput.current.value),
           },...exp])
         }).catch((error)=>{
           console.log(error);
@@ -35,8 +43,26 @@ export default function BudgetModale({setBudgets}) {
     <ModaleLayout>
         <form onSubmit={addbudget}>
             <div>
-                <label htmlFor="">name</label>
-                <input type="input" ref={nameInput}/>
+                <label htmlFor="">Default budget name</label>
+                <input list="names" ref={defaultNameInput} onInput={(e)=>{
+                  if(e.target.value=="") setUsingCustom(false)
+                  else setUsingCustom(true)                                    
+                }}/>                
+                <datalist id="names">
+                  {
+                    Object.keys(colors).map(item=>(
+                      <option key={Math.random()*100} value={item}></option>
+                    ))
+                  }
+                </datalist>
+            </div>
+            <div>
+              <label htmlFor="">Custom budget name</label>
+              <input type="text" disabled={usingCustom} ref={customNameInput}/>
+            </div>
+            <div>
+              <label htmlFor="">Color</label>
+              <input type="color" ref={colorInput} disabled={usingCustom}/>
             </div>
             <div>
                 <label htmlFor="">sum</label>
