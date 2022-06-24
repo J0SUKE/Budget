@@ -59,7 +59,6 @@ export default function Dashboard() {
       });
     })
     .then(()=>{
-      console.log(data);
       setExpenses([...data]);
     })
   }
@@ -135,7 +134,8 @@ export default function Dashboard() {
               setCardsModale(false);
             }}></div>
         }
-        {expenseModale && <ExpenseModale setExpenses={setExpenses} budgets={budgets} setBudgets={setBudgets}/>}
+        {expenseModale && 
+        <ExpenseModale setExpenses={setExpenses} budgets={budgets} setBudgets={setBudgets} cards={cards}/>}
         
         {budgetsModale && <BudgetModale setBudgets={setBudgets}/>}
 

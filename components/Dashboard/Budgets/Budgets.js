@@ -26,7 +26,7 @@ export default function Budgets({setExpenseModale,layout,budgets,setBudgetsModal
           <ul>
               {
                 budgets.map(item=>(
-                  <Budget name={item.name} sum={item.sum}/>
+                  <Budget key={item.name} name={item.name} sum={item.sum}/>
                 ))
               }
           </ul>

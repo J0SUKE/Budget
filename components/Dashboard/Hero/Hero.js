@@ -25,7 +25,7 @@ export default function Hero({setCardsModale,cards}) {
                 <img src="/images/arrow-down.svg" alt="" />
                 <p className={`${dark ? style.dark : style.light}`}>$ 134</p>
               </div>
-              <p><p>Expense today</p></p>
+              <p>Expense today</p>
             </div>
           </div>
         </div>
