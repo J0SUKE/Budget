@@ -1,6 +1,6 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import ModaleLayout from './ModaleLayout'
-import { addDoc,collection,updateDoc,doc  } from 'firebase/firestore';
+import { addDoc,collection,updateDoc,doc,Timestamp  } from 'firebase/firestore';
 import { db } from '../../../firebase/firebase-config';
 import {userContext} from '../../../Context/UserContext';
 import moment from 'moment';
@@ -23,7 +23,7 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
         // promesse qui ajoute la depense dans la bdd puis met a jour le state
         let expDoc = addDoc(collection(db,`users/${user.uid}/expenses`),{
           name:nameRef.current.value,
-          sum:sumRef.current.value,
+          sum:parseFloat(sumRef.current.value),
           budget:budgetRef.current.value,
           time:dateRef.current.value,           
           card:cardRef.current.value,         
@@ -33,7 +33,7 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
           
           setExpenses(exp=>[{
             name:nameRef.current.value,
-            sum:sumRef.current.value,
+            sum:parseFloat(sumRef.current.value),
             budget:budgetRef.current.value,
             card:cardRef.current.value,
             time:dateRef.current.value,          
@@ -52,19 +52,21 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
         // promesse qui met a jour le budget de la derniere depense
 
         let updateBudget = updateDoc(budgetDoc,{
-          sum:parseFloat(currentBdgt.sum)+parseFloat(sumRef.current.value)
+          sum:parseFloat(currentBdgt.sum)+parseFloat(sumRef.current.value),
+          lastUse:new Date().getTime()
         }).then((docRef)=>{
           
           
           setBudgets(budgets=>budgets.map(item=>{
             if (item.name == budgetRef.current.value) {
               return ({
-                ...item,
-                sum:item.sum+parseFloat(sumRef.current.value),
+                ...item,                
+                sum:parseFloat(item.sum)+parseFloat(sumRef.current.value),
+                lastUse:new Date().getTime()
               })
             }
             else return item;
-          }))
+          }).sort((a,b)=>b.lastUse-a.lastUse))
         }).catch((error)=>{
           console.log(error);
         })
@@ -74,7 +76,7 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
         let cardDoc = doc(db,`users/${user.uid}/cards`,`${currentCard.name}`);
         
         let updateCard = updateDoc(cardDoc,{
-          balance:currentCard.balance+parseFloat(sumRef.current.value),
+          balance:parseFloat(currentCard.balance)+parseFloat(sumRef.current.value),
           lastUse:new Date().getTime()
         }).then(()=>{
           
@@ -87,12 +89,15 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
               })
             }
             else return item;
-          }))
+          }).sort((a,b)=>b.lastUse-a.lastUse))
+        
         })
         
       } 
 
-
+      useEffect(()=>{
+        console.log(cards);
+      },[cards])
     return (
     <ModaleLayout>
         <form onSubmit={addExpense}>

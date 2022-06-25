@@ -15,6 +15,7 @@ import ExpenseModale from './Modale/ExpenseModale';
 import Graphic from './Graphic/Graphic';
 import BudgetModale from './Modale/BudgetModale';
 import CardModale from './Modale/CardModale';
+import Cards from './Cards/Cards';
 
 export default function Dashboard() {  
 
@@ -66,7 +67,7 @@ export default function Dashboard() {
     })
   }
   function getBudgets() {
-    const q = query(collection(db, `users/${user.uid}/budgets`),orderBy("createdAt","desc"));
+    const q = query(collection(db, `users/${user.uid}/budgets`),orderBy("lastUse","desc"));
     
     let data = [];
     const docSnap = getDocs(q)
@@ -116,6 +117,7 @@ export default function Dashboard() {
         <Header visible={visible} setVisible={setVisible}/>
         <LateralMenu visible={visible} setVisible={setVisible}/>
         {
+          // dans le cas du layout de Desktop la colonne de droute (Budgets) aura un layout desktop
           !mobileLayout &&
           <Budgets 
             expenseModale={expenseModale} 
@@ -141,9 +143,9 @@ export default function Dashboard() {
         <ExpenseModale 
           setExpenses={setExpenses} budgets={budgets} setBudgets={setBudgets} cards={cards} setCards={setCards}/>}
         
-        {budgetsModale && <BudgetModale setBudgets={setBudgets}/>}
+        {budgetsModale && <BudgetModale setBudgets={setBudgets} budgets={budgets}/>}
 
-        {cardsModale && <CardModale setCardsModale={setCardsModale} setCards={setCards}/>}
+        {cardsModale && <CardModale setCardsModale={setCardsModale} setCards={setCards} cards={cards}/>}
         
         <div className={`${style.main} ${dark ? style.dark : style.light}`}>
           <Hero 
@@ -159,10 +161,11 @@ export default function Dashboard() {
             <Expenses expenses={expenses} />
             <Graphic/>
             {
+              // dans le cas du layout de Desktop la colonne de droute (Budgets) aura un layout mobile 
               mobileLayout &&
               <Budgets 
                 expenseModale={expenseModale} 
-                layout={style.desktop} 
+                layout={style.mobile} 
                 setExpenseModale={setExpenseModale}
                 budgets={budgets}
                 budgetsModale={budgetsModale}
@@ -170,6 +173,7 @@ export default function Dashboard() {
               />
             }
           </div>
+          <Cards cards={cards}/>
         </div>      
     </>
   )

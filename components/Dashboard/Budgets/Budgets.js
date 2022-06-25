@@ -8,7 +8,7 @@ import { getColor } from '../../../utils/Colors';
 
 export default function Budgets({setExpenseModale,layout,budgets,setBudgetsModale}) {
     const {dark} = useContext(ThemeCntxt);
-    const [expensesInput,setExpensesInput] = useState({name:"",sum:"",time:""});
+    const [seeAllBudgets,setSeeAllBudgets] = useState(false);
 
     return (
     <aside className={`${style.budgets} ${layout} ${dark ? style.dark : style.light}`}>
@@ -20,14 +20,22 @@ export default function Budgets({setExpenseModale,layout,budgets,setBudgetsModal
       <section className={style.budget_section}>
         <div className={`${dark ? style.dark : style.light}`}>
           <h2>Budgets</h2>
-          <p>Decembre</p>
+          <button               
+            onClick={()=>setSeeAllBudgets(seeAllBudgets=>!seeAllBudgets)}
+          >{seeAllBudgets ? 'Minimize' : 'See all'}</button>
         </div>
         <section>
           <ul>
               {
-                budgets.map(item=>(
-                  <Budget key={item.name} name={item.name} sum={item.sum} color={item.color}/>
-                ))
+                budgets.map((item,index)=>{
+                  if (seeAllBudgets) {
+                    return (<Budget key={item.name} name={item.name} sum={item.sum} color={item.color}/>)
+                  }
+                  if (index<3) 
+                  {
+                    return (<Budget key={item.name} name={item.name} sum={item.sum} color={item.color}/>)
+                  }
+                })
               }
           </ul>
         </section>

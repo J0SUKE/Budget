@@ -1,11 +1,11 @@
 import ModaleLayout from './ModaleLayout';
 import { setDoc,collection,doc } from 'firebase/firestore';
 import { db } from '../../../firebase/firebase-config';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import {userContext} from "../../../Context/UserContext";
 import { useContext } from "react";
 
-export default function CardModale({setCardsModale,setCards}) {
+export default function CardModale({setCardsModale,setCards,cards}) {
     
     
     const {user} = useContext(userContext);
@@ -14,12 +14,21 @@ export default function CardModale({setCardsModale,setCards}) {
     const balanceInput = useRef();
     const colorInput = useRef();
 
+    const [errorMessage,setErrorMessage] = useState(null);
+
     function addCard(e) {
         e.preventDefault();
 
+        if (!checkInput(
+                nameInput.current.value,
+                colorInput.current.value,
+                balanceInput.current.value,
+                setErrorMessage,
+                cards)) return;
+
         let expDoc = setDoc(doc(collection(db,`users/${user.uid}/cards`),`${nameInput.current.value}`),{
             name:nameInput.current.value,
-            balance:balanceInput.current.value,
+            balance:parseFloat(balanceInput.current.value),
             color:colorInput.current.value,
             lastUse:new Date().getTime(),
             createdAt:new Date().getTime()  
@@ -29,7 +38,7 @@ export default function CardModale({setCardsModale,setCards}) {
             setCards((cards)=>([
                 {
                     name:nameInput.current.value,
-                    balance:balanceInput.current.value,
+                    balance:parseFloat(balanceInput.current.value),
                     color:colorInput.current.value,
                     lastUse:new Date().getTime(),
                     createdAt:new Date().getTime()  
@@ -59,7 +68,34 @@ export default function CardModale({setCardsModale,setCards}) {
             <div>
                 <input type="submit" value={'Add Card'}/>
             </div>
+            <div>
+                {
+                    errorMessage && <p>{errorMessage}</p>
+                }
+            </div>
         </form>
     </ModaleLayout>
   )
+}
+
+
+function checkInput(name,color,sum,setErrorMessage,cards) {
+    if (name=="") {
+        setErrorMessage('Please set a name')
+        return false;
+    }
+    if (cards.filter(item=>item.name==name).length==1) {
+        setErrorMessage('This card already exists');
+        return false;
+    }
+    if (isNaN(sum)) {
+        setErrorMessage('Please set a valid sum');
+        return false;
+    }
+    if (cards.filter(item=>item.color==color).length==1) {
+        setErrorMessage('This color is already taken');
+        return false;
+    }
+
+    return true;
 }
