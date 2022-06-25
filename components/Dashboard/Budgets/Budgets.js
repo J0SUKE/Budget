@@ -4,6 +4,7 @@ import { useContext, useMemo } from 'react';
 import { useState } from 'react';
 import {colors} from '../../../utils/Colors';
 import { getColor } from '../../../utils/Colors';
+import { abbreviateNumber } from "js-abbreviation-number";
 
 
 export default function Budgets({setExpenseModale,layout,budgets,setBudgetsModale}) {
@@ -66,7 +67,7 @@ function Budget({name,sum,color}) {
         <p style={{color:(color? color : getColor(name,1,colors))}}>{name}</p>
       </div>
       <div className={`${style.sum} ${dark ? style.dark : style.light}`}>
-        <p>$ {parseFloat(sum).toFixed(2)}</p>
+        <p>$ {abbreviateNumber(parseFloat(sum), 2)}</p>
       </div>
     </li>
   )

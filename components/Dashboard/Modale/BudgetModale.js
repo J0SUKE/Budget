@@ -6,7 +6,7 @@ import { setDoc,collection,doc } from 'firebase/firestore';
 import { db } from '../../../firebase/firebase-config';
 import {colors} from '../../../utils/Colors'
 
-export default function BudgetModale({setBudgets,budgets}) {
+export default function BudgetModale({setBudgets,budgets,cards}) {
     const {user} = useContext(userContext);
     const defaultNameInput = useRef();
     const customNameInput = useRef();
@@ -21,7 +21,7 @@ export default function BudgetModale({setBudgets,budgets}) {
                       
         let namevalue = usingCustom ? customNameInput.current.value : defaultNameInput.current.value;        
 
-        if (!checkInput(namevalue,sumInput.current.value,setErrorMessage,budgets)) return;
+        if (!checkInput(namevalue,sumInput.current.value,setErrorMessage,budgets,usingCustom)) return;
 
         let expDoc = doc(collection(db,`users/${user.uid}/budgets`),`${namevalue}`);
         let expDocAdd = setDoc(expDoc,{
@@ -47,7 +47,11 @@ export default function BudgetModale({setBudgets,budgets}) {
   
     return (
     <ModaleLayout>
-        <form onSubmit={addbudget}>
+        {
+          cards.length==0 ?
+          <p>You have to register a card to add budgets</p>
+          :
+          <form onSubmit={addbudget}>
             <div>
                 <label htmlFor="">Default budget name</label>
                 <input 
@@ -93,13 +97,15 @@ export default function BudgetModale({setBudgets,budgets}) {
                 errorMessage && <p>{errorMessage}</p>
               }
             </div>
-        </form>
+          </form>
+        }
+        
     </ModaleLayout>
   )
 }
 
 
-function checkInput(name,sum,setErrorMessage,budgets) 
+function checkInput(name,sum,setErrorMessage,budgets,usingCustom) 
 { 
   if (name=="") {
     setErrorMessage('Please set a name')
@@ -108,6 +114,16 @@ function checkInput(name,sum,setErrorMessage,budgets)
   if (budgets.filter(item=>item.name==name).length==1) {
     setErrorMessage('This budget already exists')
     return false;    
+  }
+  if (!usingCustom && !colors[name]) 
+  {
+    setErrorMessage('Please select a default budget name')
+    return false;
+  }
+
+  if (usingCustom && colors[name]) {
+    setErrorMessage('Please uncheck the "Using a custom name" to use this name')
+    return false;
   }
 
   if (sum=="") {
@@ -119,5 +135,6 @@ function checkInput(name,sum,setErrorMessage,budgets)
     return false;
   }
 
+  setErrorMessage(null);
   return true;
 }

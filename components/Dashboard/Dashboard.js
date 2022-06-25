@@ -143,7 +143,7 @@ export default function Dashboard() {
         <ExpenseModale 
           setExpenses={setExpenses} budgets={budgets} setBudgets={setBudgets} cards={cards} setCards={setCards}/>}
         
-        {budgetsModale && <BudgetModale setBudgets={setBudgets} budgets={budgets}/>}
+        {budgetsModale && <BudgetModale setBudgets={setBudgets} budgets={budgets} cards={cards}/>}
 
         {cardsModale && <CardModale setCardsModale={setCardsModale} setCards={setCards} cards={cards}/>}
         

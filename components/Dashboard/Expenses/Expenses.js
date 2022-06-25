@@ -4,6 +4,7 @@ import { ThemeCntxt } from "../../../Context/ThemeContext";
 import Moment from 'react-moment';
 import { colors } from "../../../utils/Colors";
 import { getColor } from "../../../utils/Colors";
+import { abbreviateNumber } from "js-abbreviation-number";
 
 export default function Expenses({expenses}) {
     
@@ -43,7 +44,7 @@ export default function Expenses({expenses}) {
                       </div>
                     </div>
                     <div className={`${style.price} ${exp.sum>0 ? style.gain : style.loss}`}>
-                      <p>{exp.sum>0 ? '+' : '-'} $ {(Math.abs(exp.sum)).toFixed(2)}</p>
+                      <p>{exp.sum>0 ? '+' : '-'} $ {abbreviateNumber((Math.abs(exp.sum)),2)}</p>
                     </div>
                   </li>
                 ))

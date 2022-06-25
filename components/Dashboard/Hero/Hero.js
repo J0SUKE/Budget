@@ -2,7 +2,8 @@ import style from '../Dashboard.module.scss';
 import { ThemeCntxt } from '../../../Context/ThemeContext';
 import { useContext, useEffect, useState } from 'react';
 import Moment from 'react-moment';
-import moment from 'moment';
+import { abbreviateNumber } from "js-abbreviation-number";
+
 
 export default function Hero({setCardsModale,cards,expenses,setLoss,setGain,loss,gain}) {
     
@@ -46,19 +47,21 @@ export default function Hero({setCardsModale,cards,expenses,setLoss,setGain,loss
     <main className={`${style.hero} ${dark ? style.dark : style.light}`}>
         <div className={style.hero__left}>
           <h3>Total Balance</h3>
-          <h1 className={`${dark ? style.dark : style.light}`}>{total.toFixed(2)} <span>$</span></h1>
+          <h1 className={`${dark ? style.dark : style.light}`}>
+            {abbreviateNumber(total, 2)}
+          </h1>
           <div className={style.daily_incomes}>
             <div className={style.daily_incomes_elem}>
               <div>
                 <img src="/images/arrow-up.svg" alt="" />
-                <p className={`${dark ? style.dark : style.light}`}>$ {gain.toFixed(2)}</p>
+                <p className={`${dark ? style.dark : style.light}`}>$ {abbreviateNumber(gain, 2)}</p>
               </div>
               <p>Income today</p>
             </div>
             <div className={style.daily_incomes_elem}>
               <div>
                 <img src="/images/arrow-down.svg" alt="" />
-                <p className={`${dark ? style.dark : style.light}`}>$ {(loss).toFixed(2)}</p>
+                <p className={`${dark ? style.dark : style.light}`}>$ {abbreviateNumber(loss, 2)}</p>
               </div>
               <p>Expense today</p>
             </div>
@@ -69,7 +72,7 @@ export default function Hero({setCardsModale,cards,expenses,setLoss,setGain,loss
               cards[0] && 
               <div className={style.card} style={{background:cards[0].color}}>
                 <section>
-                  <h1>$ {parseFloat(cards[0].balance).toFixed(2)}</h1>
+                  <h1>$ {abbreviateNumber(parseFloat(cards[0].balance), 2)}</h1>
                   <img src="/images/icons/sim-card.svg" alt="" />
                 </section>
                 <div>

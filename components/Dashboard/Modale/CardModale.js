@@ -96,6 +96,7 @@ function checkInput(name,color,sum,setErrorMessage,cards) {
         setErrorMessage('This color is already taken');
         return false;
     }
-
+    
+    setErrorMessage(null);
     return true;
 }

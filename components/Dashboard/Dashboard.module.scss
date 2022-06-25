@@ -324,6 +324,7 @@ $red:#c52c2c;
 .main
 {
     min-height:100vh;
+    height: auto;
     position: absolute;
     z-index: 0;
     top: 47px;
@@ -430,6 +431,10 @@ $red:#c52c2c;
             p{
                 color: lightgray;
                 font-size: .8rem;
+                white-space: nowrap;
+                max-width: 130px;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             span{
                 color: lightgray;
@@ -698,10 +703,10 @@ $red:#c52c2c;
 {
     width: 95%;
     max-width: 800px;    
-    height: 300px;
     @media screen and(max-width:1125px) {
         max-width: 540px;
     }
+    
     &>h2{
         font-size: 1.4rem;
         font-weight: 400;
@@ -724,6 +729,16 @@ $red:#c52c2c;
     padding:1.5rem 1rem;
     &.light{background: $light-gray-right;}
     &.dark{background: $dark-gray-right;}
+
+    &>p{
+        text-align: center;
+        font-size: .8rem;
+        font-weight: 600;
+        &.light{color: $dark-gray-main;}
+        &.dark{color: $gray-btns-dark;}
+    }
+
+
     @media screen and(max-width:1125px)
     {
         max-width: unset;
@@ -757,6 +772,10 @@ $red:#c52c2c;
             min-height: 100%;
             h3{
                 font-size: 1rem;
+                white-space: nowrap;
+                max-width: 170px;
+                overflow: hidden;
+                text-overflow: ellipsis;
                 &.light{color: $dark-gray-main;}
                 &.dark{color: $light-gray-right;}
             }

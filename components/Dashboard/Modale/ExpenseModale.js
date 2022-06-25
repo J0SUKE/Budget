@@ -100,7 +100,11 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
       },[cards])
     return (
     <ModaleLayout>
-        <form onSubmit={addExpense}>
+        {
+          cards.length==0 ?
+          <p>You have to register a card to add expenses</p>
+          :
+          <form onSubmit={addExpense}>
             <div>
                 <label htmlFor="">Name</label>
                 <input type="text" ref={nameRef}/>
@@ -143,7 +147,9 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
                 errorMessage && <p>{errorMessage}</p>
               }
             </div>
-        </form>
+          </form>
+        }
+        
     </ModaleLayout>
   )
 }
@@ -210,6 +216,6 @@ function checkInput(inputs,setErrorMessage,budgets,cards)
   }
   
 
-  
+  setErrorMessage(null);  
   return true;
 }

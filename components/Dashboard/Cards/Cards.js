@@ -2,6 +2,7 @@ import style from '../Dashboard.module.scss';
 import { ThemeCntxt } from '../../../Context/ThemeContext';
 import { useContext } from 'react';
 import Moment from 'react-moment';
+import { abbreviateNumber } from "js-abbreviation-number";
 
 export default function Cards({cards}) {
   
@@ -13,7 +14,7 @@ export default function Cards({cards}) {
         <div className={`${style.cards} ${dark ? style.dark : style.light}`}>
             {
                 cards.length == 0 ?
-                <p>No cards</p>
+                <p className={`${dark ? style.dark : style.light}`}>No cards</p>
                 :
                 <ul>
                     {
@@ -30,7 +31,7 @@ export default function Cards({cards}) {
                                         </Moment></p>                                        
                                     </div>
                                     <div className={`${style.balance} ${dark ? style.dark : style.light}`}>
-                                        $ {(item.balance).toFixed(2)}
+                                        $ {abbreviateNumber(item.balance, 2)}
                                     </div>
                                 </li>
                             )
