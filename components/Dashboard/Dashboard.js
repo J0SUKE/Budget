@@ -29,6 +29,7 @@ export default function Dashboard() {
   
   const [visible,setVisible] = useState(false); // lateral menu
 
+  const [total,setTotal] = useState(0);
   const [loss,setLoss] = useState(0);
   const [gain,setGain] = useState(0);
 
@@ -111,6 +112,15 @@ export default function Dashboard() {
     })
   },[])
 
+  useEffect(()=>{
+    //calcul du total
+    let tot = 0;
+      cards.forEach(element => {
+        tot+=parseFloat(element.balance);
+      });
+      setTotal(tot);
+  },[cards])
+
     return (
     <>
         <button className={style.toggleTheme} onClick={()=>{setDark(dark=>!dark)}}>toggle</button>
@@ -156,10 +166,12 @@ export default function Dashboard() {
               setGain={setGain}
               loss={loss}
               gain={gain}
+              total={total}
+              setTotal={setTotal}
           />
           <div className={style.data_zone}>
             <Expenses expenses={expenses} />
-            <Graphic/>
+            <Graphic expenses={expenses} total={total}/>
             {
               // dans le cas du layout de Desktop la colonne de droute (Budgets) aura un layout mobile 
               mobileLayout &&

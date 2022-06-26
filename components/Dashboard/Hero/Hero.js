@@ -5,21 +5,13 @@ import Moment from 'react-moment';
 import { abbreviateNumber } from "js-abbreviation-number";
 
 
-export default function Hero({setCardsModale,cards,expenses,setLoss,setGain,loss,gain}) {
+export default function Hero({setCardsModale,cards,expenses,setLoss,setGain,loss,gain,total}) {
     
     const {dark} = useContext(ThemeCntxt);
-    const [total,setTotal] = useState(0);
 
 
     useEffect(()=>{
-      let tot = 0;
-      cards.forEach(element => {
-        tot+=parseFloat(element.balance);
-      });
-      setTotal(tot);
-
       // calcul des differentiels 
-
       let loss = 0;
       let gain=0;
       let yesterday = new Date();
