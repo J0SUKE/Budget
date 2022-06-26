@@ -96,6 +96,10 @@ export default function ModifyCardModale({modifyCardModale,setBudgets,setCards,c
           <input type="checkbox" onInput={()=>setChangeColor(change=>!change)}/>
           <input type="color" ref={colorRef} disabled={!changeColor}/>
         </div>
+        {
+          errorMessage&&
+          <p>{errorMessage}</p>
+        }
         <div>
           <input type="submit" value='save'/>
         </div>
