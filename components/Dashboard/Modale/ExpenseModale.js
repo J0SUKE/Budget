@@ -72,7 +72,7 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
         })
 
         // promesse qui met a jour le compte de la derniere reponse
-        let currentCard = cards.filter(item=>cardRef.current.value==item.name)[0];//budget actuel
+        let currentCard = cards.filter(item=>cardRef.current.value==item.name)[0];//card actuel
         let cardDoc = doc(db,`users/${user.uid}/cards`,`${currentCard.name}`);
         
         let updateCard = updateDoc(cardDoc,{

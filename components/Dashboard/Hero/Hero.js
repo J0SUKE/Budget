@@ -40,20 +40,21 @@ export default function Hero({setCardsModale,cards,expenses,setLoss,setGain,loss
         <div className={style.hero__left}>
           <h3>Total Balance</h3>
           <h1 className={`${dark ? style.dark : style.light}`}>
-            {abbreviateNumber(total, 2)}
+            {abbreviateNumber(parseFloat(total).toFixed(2), 2)}
+            <span>$</span>
           </h1>
           <div className={style.daily_incomes}>
             <div className={style.daily_incomes_elem}>
               <div>
                 <img src="/images/arrow-up.svg" alt="" />
-                <p className={`${dark ? style.dark : style.light}`}>$ {abbreviateNumber(gain, 2)}</p>
+                <p className={`${dark ? style.dark : style.light}`}>$ {abbreviateNumber(parseFloat(gain).toFixed(2), 2)}</p>
               </div>
               <p>Income today</p>
             </div>
             <div className={style.daily_incomes_elem}>
               <div>
                 <img src="/images/arrow-down.svg" alt="" />
-                <p className={`${dark ? style.dark : style.light}`}>$ {abbreviateNumber(loss, 2)}</p>
+                <p className={`${dark ? style.dark : style.light}`}>$ {abbreviateNumber(parseFloat(loss).toFixed(2), 2)}</p>
               </div>
               <p>Expense today</p>
             </div>
@@ -64,7 +65,7 @@ export default function Hero({setCardsModale,cards,expenses,setLoss,setGain,loss
               cards[0] && 
               <div className={style.card} style={{background:cards[0].color}}>
                 <section>
-                  <h1>$ {abbreviateNumber(parseFloat(cards[0].balance), 2)}</h1>
+                  <h1>$ {abbreviateNumber(parseFloat(cards[0].balance).toFixed(2), 2)}</h1>
                   <img src="/images/icons/sim-card.svg" alt="" />
                 </section>
                 <div>

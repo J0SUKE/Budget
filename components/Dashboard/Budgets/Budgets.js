@@ -67,7 +67,7 @@ function Budget({name,sum,color}) {
         <p style={{color:(color? color : getColor(name,1,colors))}}>{name}</p>
       </div>
       <div className={`${style.sum} ${dark ? style.dark : style.light}`}>
-        <p>$ {abbreviateNumber(parseFloat(sum), 2)}</p>
+        <p>$ {abbreviateNumber(parseFloat(sum).toFixed(2), 2)}</p>
       </div>
     </li>
   )

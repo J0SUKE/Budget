@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import Moment from 'react-moment';
 import { abbreviateNumber } from "js-abbreviation-number";
 
-export default function Cards({cards}) {
+export default function Cards({cards,setModifyCardModale}) {
   
     const {dark} = useContext(ThemeCntxt);
 
@@ -20,7 +20,11 @@ export default function Cards({cards}) {
                     {
                         cards.map(item=>{
                             return(
-                                <li key={item.name} className={`${dark ? style.dark : style.light}`}>
+                                <li 
+                                    key={item.name} 
+                                    className={`${dark ? style.dark : style.light}`}
+                                    onClick={()=>setModifyCardModale(item)}
+                                >
                                     <div className={style.icon} style={{background:item.color}}>
                                         <img src="/images/icons/sim-card.svg" alt="" />
                                     </div>
@@ -31,7 +35,7 @@ export default function Cards({cards}) {
                                         </Moment></p>                                        
                                     </div>
                                     <div className={`${style.balance} ${dark ? style.dark : style.light}`}>
-                                        $ {abbreviateNumber(item.balance, 2)}
+                                        $ {abbreviateNumber(parseFloat(item.balance).toFixed(2), 2)}
                                     </div>
                                 </li>
                             )

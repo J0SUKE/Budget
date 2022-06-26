@@ -16,6 +16,7 @@ import Graphic from './Graphic/Graphic';
 import BudgetModale from './Modale/BudgetModale';
 import CardModale from './Modale/CardModale';
 import Cards from './Cards/Cards';
+import ModifyCardModale from './Modale/ModifyCardModale';
 
 export default function Dashboard() {  
 
@@ -37,6 +38,7 @@ export default function Dashboard() {
   const [expenseModale,setExpenseModale] = useState(false);
   const [budgetsModale,setBudgetsModale] = useState(false);
   const [cardsModale,setCardsModale] = useState(false);
+  const [modifyCardModale,setModifyCardModale] = useState(null);
   
   //layout
   const [mobileLayout,setMobileLayout] = useState((window.innerWidth<=750));
@@ -141,22 +143,32 @@ export default function Dashboard() {
         
         
         {visible && <div className={style.overlay} onClick={()=>setVisible(false)}></div>}
-        {(expenseModale || budgetsModale || cardsModale) && 
+        {(expenseModale || budgetsModale || cardsModale || modifyCardModale) && 
           <div className={style.overlay} 
             onClick={()=>{
               setExpenseModale(false)
               setBudgetsModale(false)
               setCardsModale(false);
+              setModifyCardModale(null);
             }}></div>
-        }
-        {expenseModale && 
-        <ExpenseModale 
-          setExpenses={setExpenses} budgets={budgets} setBudgets={setBudgets} cards={cards} setCards={setCards}/>}
-        
-        {budgetsModale && <BudgetModale setBudgets={setBudgets} budgets={budgets} cards={cards}/>}
+        }        
 
-        {cardsModale && <CardModale setCardsModale={setCardsModale} setCards={setCards} cards={cards}/>}
+        {expenseModale && 
+        <ExpenseModale setExpenses={setExpenses} budgets={budgets} setBudgets={setBudgets} cards={cards} setCards={setCards}/>}
         
+        {budgetsModale && 
+        <BudgetModale setBudgets={setBudgets} budgets={budgets} cards={cards}/>}
+
+        {cardsModale && 
+        <CardModale setCardsModale={setCardsModale} setCards={setCards} cards={cards}/>}
+        
+        {
+          modifyCardModale &&
+          <ModifyCardModale 
+          modifyCardModale={modifyCardModale} cards={cards} setCards={setCards} setBudgets={setBudgets} budgets={budgets} setModifyCardModale={setModifyCardModale}
+          />
+        }
+
         <div className={`${style.main} ${dark ? style.dark : style.light}`}>
           <Hero 
               setCardsModale={setCardsModale} 
@@ -185,7 +197,7 @@ export default function Dashboard() {
               />
             }
           </div>
-          <Cards cards={cards}/>
+          <Cards cards={cards} setModifyCardModale={setModifyCardModale}/>
         </div>      
     </>
   )
