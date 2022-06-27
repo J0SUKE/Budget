@@ -4,10 +4,12 @@ import { addDoc,collection,updateDoc,doc,Timestamp  } from 'firebase/firestore';
 import { db } from '../../../firebase/firebase-config';
 import {userContext} from '../../../Context/UserContext';
 import moment from 'moment';
+import style from '../Dashboard.module.scss';
+import { ThemeCntxt } from '../../../Context/ThemeContext';
 
-export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setCards}) 
+export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setCards,setExpenseModale}) 
 {
-    
+    const {dark} = useContext(ThemeCntxt);
     const {user} = useContext(userContext);
     const [errorMessage,setErrorMessage ]= useState(null);
     const nameRef = useRef();
@@ -93,27 +95,25 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
         
         })
         
+        
       } 
 
-      useEffect(()=>{
-        console.log(cards);
-      },[cards])
     return (
-    <ModaleLayout>
+    <ModaleLayout topLeft={'Add an expense'}>
         {
           cards.length==0 ?
           <p>You have to register a card to add expenses</p>
           :
           <form onSubmit={addExpense}>
-            <div>
+            <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
                 <label htmlFor="">Name</label>
                 <input type="text" ref={nameRef}/>
             </div>
-            <div>
+            <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
                 <label htmlFor="">Sum</label>
                 <input type="number" step='0.01' ref={sumRef}/>
             </div>
-            <div>
+            <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
               <label htmlFor="">Budget</label>
               <input list="budgets" ref={budgetRef}/>
               <datalist id="budgets">
@@ -124,7 +124,7 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
                 }                              
               </datalist>
             </div>
-            <div>
+            <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
               <label htmlFor="">Card</label>
               <input list="cards" ref={cardRef}/>
               <datalist id="cards">
@@ -135,17 +135,19 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
                 }                              
               </datalist>
             </div>
-            <div>
+            <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
                 <label htmlFor="">Date</label>
                 <input type="date" ref={dateRef}/>
+                <img src="/images/icons/calendar.svg" alt="" />
             </div>
-            <div>
-                <input type="submit" value={'add'}/>
-            </div>
-            <div>
+            <div className={style.errorMesg}>
               {
-                errorMessage && <p>{errorMessage}</p>
+                  errorMessage && <p>{errorMessage}</p>
               }
+            </div>
+            
+            <div className={style.submit}>
+                <input type="submit" value={'add'}/>
             </div>
           </form>
         }
@@ -164,54 +166,54 @@ function checkInput(inputs,setErrorMessage,budgets,cards)
   dateRef:{current:{value:date}}} = inputs;
   
   if (name=="") {
-    setErrorMessage('please set a name');
+    setErrorMessage('Please set a name');
     return false;
   }
 
   //sum
   if (sum=="") {
-    setErrorMessage('please set a value');    
+    setErrorMessage('Please set a sum');    
     return false;
   }
 
   if (isNaN(sum)) {    
-    setErrorMessage('please set a valid sum');    
+    setErrorMessage('Please set a valid sum');    
     return false;
   }
   if (sum==0) {
-    setErrorMessage('sum has to be different than 0');    
+    setErrorMessage('Sum has to be different than 0');    
     return false;
   }
 
   // card
   if (budget=="") {
-    setErrorMessage('please select a budget');
+    setErrorMessage('Please select a budget');
     return false;
   }
   if (budgets.filter(item=>item.name==budget).length==0) 
   {
-    setErrorMessage('please select an existing budget');
+    setErrorMessage('Please select an existing budget');
     return false;
   }
 
   //card
   if (card=="") {
-    setErrorMessage('please select a card');
+    setErrorMessage('Please select a card');
     return false;
   }
   if (cards.filter(item=>item.name==card).length==0) 
   {
-    setErrorMessage('please select an existing card');
+    setErrorMessage('Please select an existing card');
     return false;
   }
 
   //date
   if (date=="") {
-    setErrorMessage('please set a date');
+    setErrorMessage('Please set a date');
     return false;
   }
   if (!moment(date, "YYYY/MM/DD", false).isValid()) {
-    setErrorMessage('please set valid a date');
+    setErrorMessage('Please set valid a date');
     return false;
   }
   

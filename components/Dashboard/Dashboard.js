@@ -17,19 +17,29 @@ import BudgetModale from './Modale/BudgetModale';
 import CardModale from './Modale/CardModale';
 import Cards from './Cards/Cards';
 import ModifyCardModale from './Modale/ModifyCardModale';
+import ModifyBudgetModale from './Modale/ModifyBudgetModale';
+
+export const ModaleContext = React.createContext();
+
 
 export default function Dashboard() {  
 
+  //contexts
   const {user,setUser} = useContext(userContext);
   const{setDark,dark} = useContext(ThemeCntxt);
+  
+  //router
   const router = useRouter();
 
+  // firebase data
   const [expenses,setExpenses] = useState([]);
   const [budgets,setBudgets] = useState([]);
   const [cards,setCards] = useState([]);
   
-  const [visible,setVisible] = useState(false); // lateral menu
+  // lateral menu
+  const [visible,setVisible] = useState(false);
 
+  //hero data
   const [total,setTotal] = useState(0);
   const [loss,setLoss] = useState(0);
   const [gain,setGain] = useState(0);
@@ -39,6 +49,7 @@ export default function Dashboard() {
   const [budgetsModale,setBudgetsModale] = useState(false);
   const [cardsModale,setCardsModale] = useState(false);
   const [modifyCardModale,setModifyCardModale] = useState(null);
+  const [modifyBudgetModale,setModifyBudgetModale] = useState(null);
   
   //layout
   const [mobileLayout,setMobileLayout] = useState((window.innerWidth<=750));
@@ -129,7 +140,7 @@ export default function Dashboard() {
         <Header visible={visible} setVisible={setVisible}/>
         <LateralMenu visible={visible} setVisible={setVisible}/>
         {
-          // dans le cas du layout de Desktop la colonne de droute (Budgets) aura un layout desktop
+          // dans le cas du layout de Desktop la colonne de droite (Budgets) aura un layout desktop
           !mobileLayout &&
           <Budgets 
             expenseModale={expenseModale} 
@@ -138,36 +149,81 @@ export default function Dashboard() {
             budgets={budgets}
             budgetsModale={budgetsModale}
             setBudgetsModale={setBudgetsModale}
+            setModifyBudgetModale={setModifyBudgetModale}
           />
         }
         
         
         {visible && <div className={style.overlay} onClick={()=>setVisible(false)}></div>}
-        {(expenseModale || budgetsModale || cardsModale || modifyCardModale) && 
+        {(expenseModale || budgetsModale || cardsModale || modifyCardModale || modifyBudgetModale) && 
           <div className={style.overlay} 
             onClick={()=>{
               setExpenseModale(false)
               setBudgetsModale(false)
               setCardsModale(false);
               setModifyCardModale(null);
+              setModifyBudgetModale(null);
             }}></div>
         }        
 
-        {expenseModale && 
-        <ExpenseModale setExpenses={setExpenses} budgets={budgets} setBudgets={setBudgets} cards={cards} setCards={setCards}/>}
-        
-        {budgetsModale && 
-        <BudgetModale setBudgets={setBudgets} budgets={budgets} cards={cards}/>}
 
-        {cardsModale && 
-        <CardModale setCardsModale={setCardsModale} setCards={setCards} cards={cards}/>}
-        
-        {
-          modifyCardModale &&
-          <ModifyCardModale 
-          modifyCardModale={modifyCardModale} cards={cards} setCards={setCards} setBudgets={setBudgets} budgets={budgets} setModifyCardModale={setModifyCardModale}
+        <ModaleContext.Provider 
+          value={{setExpenseModale,setBudgetsModale,setCardsModale,setModifyCardModale,setModifyBudgetModale}}
+        >          
+          {
+            expenseModale && 
+            <ExpenseModale 
+              setExpenses={setExpenses} 
+              budgets={budgets} 
+              setBudgets={setBudgets} 
+              cards={cards} 
+              setCards={setCards}
+              setExpenseModale={setExpenseModale}
+            />
+          }
+          
+          {
+            budgetsModale && 
+            <BudgetModale 
+                setBudgets={setBudgets} 
+                budgets={budgets} 
+                cards={cards} 
+                total={total}/>
+          }
+
+          {
+          cardsModale && 
+          <CardModale 
+              setCardsModale={setCardsModale} 
+              setCards={setCards} 
+              cards={cards}
           />
-        }
+          }
+          
+          {
+            modifyCardModale &&
+            <ModifyCardModale 
+                modifyCardModale={modifyCardModale} 
+                cards={cards} 
+                setCards={setCards} 
+                setBudgets={setBudgets} 
+                budgets={budgets} 
+                setModifyCardModale={setModifyCardModale}
+            />
+          }
+
+          {
+            modifyBudgetModale &&
+            <ModifyBudgetModale 
+              modifyBudgetModale={modifyBudgetModale} 
+              budgets={budgets} 
+              setBudgets={setBudgets} 
+              total={total} 
+              setModifyBudgetModale={setModifyBudgetModale}
+            />
+          }
+        </ModaleContext.Provider>
+        
 
         <div className={`${style.main} ${dark ? style.dark : style.light}`}>
           <Hero 
@@ -194,6 +250,7 @@ export default function Dashboard() {
                 budgets={budgets}
                 budgetsModale={budgetsModale}
                 setBudgetsModale={setBudgetsModale}
+                setModifyBudgetModale={setModifyBudgetModale}
               />
             }
           </div>

@@ -5,9 +5,12 @@ import { useRef } from "react";
 import { setDoc,collection,doc } from 'firebase/firestore';
 import { db } from '../../../firebase/firebase-config';
 import {colors} from '../../../utils/Colors'
+import { ThemeCntxt } from "../../../Context/ThemeContext";
+import style from '../Dashboard.module.scss';
 
-export default function BudgetModale({setBudgets,budgets,cards}) {
+export default function BudgetModale({setBudgets,budgets,cards,total}) {
     const {user} = useContext(userContext);
+    const {dark} = useContext(ThemeCntxt);
     const defaultNameInput = useRef();
     const customNameInput = useRef();
     const sumInput = useRef();
@@ -18,7 +21,9 @@ export default function BudgetModale({setBudgets,budgets,cards}) {
     function addbudget(e) 
     {        
         e.preventDefault();
-                      
+  
+        if (!checkIfMaxReached(parseFloat(sumInput.current.value))) return;
+
         let namevalue = usingCustom ? customNameInput.current.value : defaultNameInput.current.value;        
 
         if (!checkInput(namevalue,sumInput.current.value,setErrorMessage,budgets,usingCustom)) return;
@@ -44,15 +49,29 @@ export default function BudgetModale({setBudgets,budgets,cards}) {
         })
       } 
   
+    function checkIfMaxReached(sum) {
+      let available = total;
+      budgets.forEach(element => {
+        available-=element.sum;
+      });
+
+      if (sum>available) {
+        setErrorMessage(`Error : max available $ ${(available).toFixed(2)}`);
+        return false;
+      }
+      return true;
+    }
+
   
     return (
-    <ModaleLayout>
+    <ModaleLayout topLeft='Add a budget'>
         {
           cards.length==0 ?
           <p>You have to register a card to add budgets</p>
           :
           <form onSubmit={addbudget}>
-            <div>
+            <div 
+            className={`${style.input_field} ${dark ? style.dark : style.light} ${usingCustom? style.disabled:""}`}>
                 <label htmlFor="">Default budget name</label>
                 <input 
                   list="names" 
@@ -68,12 +87,12 @@ export default function BudgetModale({setBudgets,budgets,cards}) {
                 </datalist>
             </div>
             <div>
-              <p>Using a custom name</p>
+              <p className={style.customNameP}>Use a custom name</p>
               <input type="checkbox" name="custom" onInput={()=>{
                 setUsingCustom(custom=>!custom)
               }}/>
             </div>
-            <div>
+            <div className={`${style.input_field} ${dark ? style.dark : style.light} ${!usingCustom? style.disabled:""}`}>
               <label htmlFor="">custom name</label>
               <input 
                 type="text" 
@@ -81,21 +100,21 @@ export default function BudgetModale({setBudgets,budgets,cards}) {
                 ref={customNameInput}                
               />
             </div>
-            <div>
-              <label htmlFor="">Color</label>
+            <div className={`${style.color_field} ${dark ? style.dark : style.light} ${!usingCustom? style.disabled:""}`}>
+              <label htmlFor="">select a color</label>
               <input type="color" ref={colorInput} disabled={!usingCustom}/>
             </div>
-            <div>
+            <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
                 <label htmlFor="">sum</label>
                 <input type="number" step='0.01' ref={sumInput}/>
             </div>
-            <div>
-                <input type="submit" value={'add budget'}/>
-            </div>
-            <div>
+            <div className={style.errorMesg}>
               {
                 errorMessage && <p>{errorMessage}</p>
               }
+            </div>
+            <div className={style.submit}>
+                <input type="submit" value={'add budget'}/>
             </div>
           </form>
         }

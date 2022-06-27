@@ -1,13 +1,15 @@
 import ModaleLayout from './ModaleLayout';
 import { setDoc,collection,doc } from 'firebase/firestore';
 import { db } from '../../../firebase/firebase-config';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import {userContext} from "../../../Context/UserContext";
 import { useContext } from "react";
+import { ThemeCntxt } from "../../../Context/ThemeContext";
+import style from '../Dashboard.module.scss';
 
 export default function CardModale({setCardsModale,setCards,cards}) {
     
-    
+    const {dark} = useContext(ThemeCntxt);
     const {user} = useContext(userContext);
     
     const nameInput = useRef();
@@ -16,7 +18,7 @@ export default function CardModale({setCardsModale,setCards,cards}) {
 
     const [errorMessage,setErrorMessage] = useState(null);
 
-    function addCard(e) {
+    const addCard = useMemo(()=>(e)=>{
         e.preventDefault();
 
         if (!checkInput(
@@ -48,30 +50,30 @@ export default function CardModale({setCardsModale,setCards,cards}) {
           .catch((error)=>{
             console.log(error);
           })
-    }
+    })
   
     return (
     <ModaleLayout>
         <form onSubmit={addCard}>
-            <div>
+            <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
                 <label htmlFor="">Name</label>
                 <input type="text" ref={nameInput}/>
             </div>
-            <div>
+            <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
                 <label htmlFor="">Balance</label>
                 <input type="number" step='0.01' ref={balanceInput}/>
             </div>
-            <div>
+            <div className={`${style.color_field} ${dark ? style.dark : style.light}`}> 
                 <label htmlFor="">Color</label>
                 <input type="color" ref={colorInput}/>
             </div>
-            <div>
-                <input type="submit" value={'Add Card'}/>
-            </div>
-            <div>
+            <div className={style.errorMesg}>
                 {
                     errorMessage && <p>{errorMessage}</p>
                 }
+            </div>
+            <div className={style.submit}>
+                <input type="submit" value={'Add Card'}/>
             </div>
         </form>
     </ModaleLayout>

@@ -1,13 +1,13 @@
 import style from '../Dashboard.module.scss'
 import { ThemeCntxt } from '../../../Context/ThemeContext'
-import { useContext, useMemo } from 'react';
+import { useContext} from 'react';
 import { useState } from 'react';
 import {colors} from '../../../utils/Colors';
 import { getColor } from '../../../utils/Colors';
 import { abbreviateNumber } from "js-abbreviation-number";
 
 
-export default function Budgets({setExpenseModale,layout,budgets,setBudgetsModale}) {
+export default function Budgets({setExpenseModale,layout,budgets,setBudgetsModale,setModifyBudgetModale}) {
     const {dark} = useContext(ThemeCntxt);
     const [seeAllBudgets,setSeeAllBudgets] = useState(false);
 
@@ -30,11 +30,19 @@ export default function Budgets({setExpenseModale,layout,budgets,setBudgetsModal
               {
                 budgets.map((item,index)=>{
                   if (seeAllBudgets) {
-                    return (<Budget key={item.name} name={item.name} sum={item.sum} color={item.color}/>)
+                    return (<Budget                                                                 
+                                key={item.name} 
+                                item={item}
+                                setModifyBudgetModale={setModifyBudgetModale}
+                      />)
                   }
                   if (index<3) 
                   {
-                    return (<Budget key={item.name} name={item.name} sum={item.sum} color={item.color}/>)
+                    return (<Budget 
+                                key={item.name} 
+                                item={item}
+                                setModifyBudgetModale={setModifyBudgetModale}
+                            />)
                   }
                 })
               }
@@ -52,22 +60,22 @@ export default function Budgets({setExpenseModale,layout,budgets,setBudgetsModal
 }
 
 
-function Budget({name,sum,color}) {
+function Budget({item,setModifyBudgetModale}) {
   
   const {dark} = useContext(ThemeCntxt);
 
   return (
-    <li>
-      <div className={style.logo} style={{background:(color? `${color}33` : getColor(name,0.2,colors))}}>        
+    <li onClick={()=>setModifyBudgetModale(item)}>
+      <div className={style.logo} style={{background:(item.color? `${item.color}33` : getColor(item.name,0.2,colors))}}>        
         {
-          colors[name] &&
-          <img src={`/images/icons/${name}.svg`} alt=""/>
+          colors[item.name] &&
+          <img src={`/images/icons/${item.name}.svg`} alt=""/>
         }
         
-        <p style={{color:(color? color : getColor(name,1,colors))}}>{name}</p>
+        <p style={{color:(item.color? item.color : getColor(item.name,1,colors))}}>{item.name}</p>
       </div>
       <div className={`${style.sum} ${dark ? style.dark : style.light}`}>
-        <p>$ {abbreviateNumber(parseFloat(sum).toFixed(2), 2)}</p>
+        <p>$ {abbreviateNumber(parseFloat(item.sum).toFixed(2), 2)}</p>
       </div>
     </li>
   )

@@ -1,11 +1,14 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useMemo, useRef, useState } from 'react'
 import ModaleLayout from './ModaleLayout'
 import { doc,updateDoc,deleteDoc } from 'firebase/firestore';
 import { db } from '../../../firebase/firebase-config';
 import {userContext} from '../../../Context/UserContext';
+import { ThemeCntxt } from "../../../Context/ThemeContext";
+import style from '../Dashboard.module.scss';
 
 export default function ModifyCardModale({modifyCardModale,setBudgets,setCards,cards,budgets,setModifyCardModale}) {
 
+  const {dark} = useContext(ThemeCntxt);
   const {user} = useContext(userContext);
     
   const balanceRef = useRef();
@@ -13,9 +16,7 @@ export default function ModifyCardModale({modifyCardModale,setBudgets,setCards,c
   const [changeColor,setChangeColor] = useState(false);
   const [errorMessage,setErrorMessage] = useState(null)
 
-
-  
-  function modifyCard(e) {
+  const modifyCard = useMemo(()=>(e)=>{
     e.preventDefault();
 
     if (balanceRef.current.value=="" && colorRef.current.value=="") return;
@@ -56,13 +57,9 @@ export default function ModifyCardModale({modifyCardModale,setBudgets,setCards,c
 
       setModifyCardModale(null);
 
-    }).catch(error=>{
-      // if not catched , an error will occur 
     })
-
-
-  }
-
+  })
+  
 
   function resetBudgets() {
     budgets.forEach(element => {
@@ -86,27 +83,32 @@ export default function ModifyCardModale({modifyCardModale,setBudgets,setCards,c
   return (
     <ModaleLayout>
       <form onSubmit={modifyCard}>
-        <div>
+        <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
           <label htmlFor="">Balance</label>
           <input type="number" step='0.01' ref={balanceRef}/>
         </div>
-        <p>(if you modify the balance , all budgets will be set to 0)</p>
+        <p 
+          className={`${style.warning} ${dark ? style.dark : style.light}`}
+        >If you modify the balance, all budgets will be set to 0</p>
         <div>
-          <label htmlFor="">Change the color ? </label>
+          <p className={style.customNameP}>Change the color ? </p>
           <input type="checkbox" onInput={()=>setChangeColor(change=>!change)}/>
+        </div>
+        <div className={`${style.color_field} ${dark ? style.dark : style.light} ${!changeColor && style.disabled }`}>
+          <label htmlFor="">Select a color</label>
           <input type="color" ref={colorRef} disabled={!changeColor}/>
         </div>
         {
           errorMessage&&
-          <p>{errorMessage}</p>
+          <p className={style.errorMesg}>{errorMessage}</p>
         }
-        <div>
+        <div className={style.submit}>
           <input type="submit" value='save'/>
         </div>
       </form>
-      <div>
+      <div className={style.delete}>
         <button onClick={deleteCard}>Delete this card</button>
-        <p>(if you do so , all budgets will be set to 0)</p>
+        <p className={`${style.warning} ${dark ? style.dark : style.light}`}>If you do so , all budgets will be set to 0</p>
       </div>
     </ModaleLayout>
   )
