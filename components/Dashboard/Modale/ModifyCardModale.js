@@ -81,7 +81,7 @@ export default function ModifyCardModale({modifyCardModale,setBudgets,setCards,c
   }
 
   return (
-    <ModaleLayout>
+    <ModaleLayout topLeft={'Update a card'}>
       <form onSubmit={modifyCard}>
         <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
           <label htmlFor="">Balance</label>

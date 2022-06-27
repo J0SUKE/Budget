@@ -26,7 +26,8 @@ export default function CardModale({setCardsModale,setCards,cards}) {
                 colorInput.current.value,
                 balanceInput.current.value,
                 setErrorMessage,
-                cards)) return;
+                cards
+            )) return;
 
         let expDoc = setDoc(doc(collection(db,`users/${user.uid}/cards`),`${nameInput.current.value}`),{
             name:nameInput.current.value,
@@ -53,7 +54,7 @@ export default function CardModale({setCardsModale,setCards,cards}) {
     })
   
     return (
-    <ModaleLayout>
+    <ModaleLayout topLeft={'Add a card'}>
         <form onSubmit={addCard}>
             <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
                 <label htmlFor="">Name</label>
@@ -88,6 +89,10 @@ function checkInput(name,color,sum,setErrorMessage,cards) {
     }
     if (cards.filter(item=>item.name==name).length==1) {
         setErrorMessage('This card already exists');
+        return false;
+    }
+    if (sum=="") {
+        setErrorMessage('Please set a sum')
         return false;
     }
     if (isNaN(sum)) {

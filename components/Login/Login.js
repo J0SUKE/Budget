@@ -32,7 +32,6 @@ export default function Login({connect,email,setEmail,password,setPassword,error
                 email={email}
                 setEmail={setEmail}
                 placeholder={'email@example.com'}
-                divClass={style.input_field}
             />
             <div 
                 onClick={()=>setFocus(passwordRef)}
@@ -95,12 +94,12 @@ export function LoginHeader() {
     )
 }
 
-export function EmailField({setFocus,emailRef,email,setEmail,placeholder,divClass}) 
+export function EmailField({setFocus,emailRef,email,setEmail,placeholder}) 
 {
     return (
         <div 
             onClick={()=>{setFocus(emailRef)}}
-            className={divClass}
+            className={style.input_field}
         >
             <label htmlFor="">Email</label>
             <input 

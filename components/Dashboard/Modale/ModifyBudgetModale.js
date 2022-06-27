@@ -86,7 +86,7 @@ export default function ModifyBudgetModale({modifyBudgetModale,budgets,setBudget
   }
 
   return (
-    <ModaleLayout>
+    <ModaleLayout topLeft={'Update a budget'}>
         <form onSubmit={modifybudget}>
           <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
             <label htmlFor="">Sum</label>

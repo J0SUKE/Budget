@@ -566,6 +566,7 @@ $red:#d71d1d;
     ul{
         width: 100%;
         height: 100%;
+        padding: 0 .5rem;
         overflow-y: scroll;
         li{
             border-radius: 10px;
@@ -609,6 +610,13 @@ $red:#d71d1d;
                     display: flex;
                     align-items: center;
                     margin-top: 3px;
+                    .budget
+                    {
+                        max-width: 100px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
                     .budget,.date
                     {
                         font-size: .9rem;
@@ -636,17 +644,18 @@ $red:#d71d1d;
         &::-webkit-scrollbar {
             width: 6px;
           }
+        scrollbar-width: 6px;
           
-          /* Track */
-          &::-webkit-scrollbar-track {
-            background: transparent;
-          }
+        /* Track */
+        &::-webkit-scrollbar-track {
+        background: transparent;
+        }
           
-          /* Handle */
-          &::-webkit-scrollbar-thumb {
-            background: rgba(136, 136, 136, 0.407);
-            border-radius: 3px;
-          }
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+        background: rgba(136, 136, 136, 0.407);
+        border-radius: 3px;
+        }
               
     }
 }
@@ -855,12 +864,16 @@ $red:#d71d1d;
     .submit{
         width: 100%;
         margin-top: 1.5rem;
-        input{
+        background: #3399FF;
+        border-radius: 10px;
+        input,input::selection{
             width: 100%;
+            display: block;
             padding: 1rem;
             border-radius: 10px;
             border: none;
-            background: #3399FF;
+            outline: none;
+            background: transparent;
             color: white;
             font-size: 1rem;
             font-weight: 500;
@@ -934,10 +947,11 @@ $red:#d71d1d;
 
 .cards_zone
 {
-    width: 95%;
-    max-width: 800px;    
+    width: 47%;
+    max-width: 380px;    
     @media screen and(max-width:1125px) {
-        max-width: 540px;
+        width: 100%;
+        max-width: unset;
     }
     
     &>h2{
@@ -956,12 +970,40 @@ $red:#d71d1d;
 
     width: 100%;
     max-width: 400px;
-    height: 100%;
     border-radius: 15px;    
     margin: 2rem 0;
-    padding:1.5rem 1rem;
-    &.light{background: $light-gray-right;}
-    &.dark{background: $dark-gray-right;}
+    padding: 25px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    
+    ul{
+        height: 100%;
+        max-height: 100%;
+        width: 100%;
+        padding:0 1rem;
+        overflow-y: scroll;
+        &::-webkit-scrollbar 
+        {
+            width: 6px;
+        }
+        
+        /* Track */
+        &::-webkit-scrollbar-track {
+        background: transparent;
+        }
+        
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+        background: rgba(136, 136, 136, 0.407);
+        border-radius: 3px;
+        }
+    }
+    
+
+        &.light{background: $light-gray-right;}
+        &.dark{background: $dark-gray-right;}
 
     &>p{
         text-align: center;

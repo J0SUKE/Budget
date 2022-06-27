@@ -6,7 +6,7 @@ import { colors } from "../../../utils/Colors";
 import { getColor } from "../../../utils/Colors";
 import { abbreviateNumber } from "js-abbreviation-number";
 
-export default function Expenses({expenses}) {
+export default function Expenses({expenses,expensesContainer}) {
     
     const {dark} = useContext(ThemeCntxt);
 
@@ -18,7 +18,7 @@ export default function Expenses({expenses}) {
             expenses.length==0 ?
             <p className={`${dark ? style.dark : style.light}`}>You haven't added any expense yet</p>
             :
-            <ul>
+            <ul ref={expensesContainer}>
               {
                 expenses.map(exp=>(
                   <li key={exp.id}>
