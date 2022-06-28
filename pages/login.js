@@ -21,7 +21,7 @@ export default function LoginPage()
     .then((userCredential) => {
       // Signed in 
       setErrorMessage(null);
-      setUser(userCredential.user);
+      setUser(userCredential.user); 
       router.push('/dashboard');
       // ...
     })

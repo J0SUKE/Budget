@@ -1,0 +1,323 @@
+$light-gray1-left : #F7F6F3;
+$light-gray-right : #f8f8f8;
+
+$gray-btns-dark:#898989;
+$gray-btns-light:#D0D0CF;
+
+$dark-gray-main:#191919;
+$dark-gray-left:#202020;
+$dark-gray-right:#272727;
+
+$border-dark:rgb(67, 67, 67);
+$border-light:rgb(224, 224, 224);
+
+$green:#2cad1e;
+$red:#d71d1d;
+
+.theme_btn
+{
+    position: fixed;
+    right: 0;
+}
+
+.lateral_menu
+{
+    position: fixed;
+    width: 300px;
+    height: 100vh;
+    &.light{background: $light-gray1-left;}   
+    &.dark{background: $dark-gray-left;}   
+}
+
+.content{
+    width: calc(100% - 300px);
+    position: absolute;
+    left: 300px;
+    min-height: 100vh;
+    &.light{background: white;}   
+    &.dark{background: $dark-gray-main;}   
+
+    section{
+        padding: 3rem 5rem;
+        h2{
+            font-size: 1.2rem;
+            padding: 1rem 0;
+            font-weight: 500;
+            &.dark{
+                color: $light-gray1-left;
+                border-bottom: 1px solid $border-dark;
+            }
+            &.light{
+                color: $dark-gray-left;
+                border-bottom: 1px solid $border-light;
+            }
+        }
+        h3{
+            margin: 1.7rem 0 1rem 0;
+            font-size: 1rem;
+            font-weight: 400;
+            &.dark{
+                color: $light-gray1-left;
+            }
+            &.light{
+                color: $dark-gray-main;
+            }
+        }
+        span{
+            font-size: .8rem;
+            &.dark{
+                color: rgb(122, 122, 122);
+            }
+            &.light{
+                color: $gray-btns-dark;
+            }
+        }
+        .email_zone
+        {
+            display: flex;
+            align-items: center;
+            margin: .8rem 0;
+            button{
+                background: transparent ;
+                border: none;
+                outline: none;
+                margin-left: 2rem;
+                font-size: .8rem;
+                padding: .2rem .6rem;
+                border-radius: 3px;
+                cursor: pointer;
+                
+                &.dark{
+                    color: darkgray;
+                    &:hover
+                    {
+                        background: rgba(57, 57, 57, 0.356);
+                    }
+                }
+                &.light{
+                    color: rgb(144, 144, 144);
+                    &:hover
+                    {
+                        background: rgba(216, 216, 216, 0.356);
+                    }
+                }
+            }
+            p{
+                font-size: 1rem;
+                &.dark{
+                    color: $light-gray1-left;
+                }
+                &.light{
+                    color: $dark-gray-main;
+                }
+            }
+        }
+
+        .name_zone
+        {
+            margin-top: 1.5rem;
+            input{
+                display: block;
+                width: 100%;
+                padding: .4rem 1rem;
+                font-size: 1.1rem;
+                margin: .8rem 0;
+
+                border: none;
+                outline: none;
+                border-radius: 3px;
+                &.dark{
+                    background: $dark-gray-right;
+                    color: white;
+                }
+                &.light{
+                    background: $light-gray-right;
+                    border: 1px solid lightgray;
+                    color: $dark-gray-main;
+                }
+            }
+        }
+
+        .btn{
+            background: transparent;
+            padding: .5rem 1rem;
+            font-size: 1rem;
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+            &.dark{
+                border: 1px solid $border-dark;
+                color: $light-gray1-left;
+                cursor: pointer;
+                &:hover
+                {
+                    background: rgba(80, 80, 80, 0.217);
+                }
+            }
+            &.light{
+                border: 1px solid $gray-btns-dark;
+                color: $dark-gray-main;
+                cursor: pointer;
+                &:hover
+                {
+                    background: rgba(119, 119, 119, 0.217);
+                }
+            }
+        }
+
+        .password_zone
+        {
+            margin: 2rem 0;
+            padding-bottom: 2rem;
+            &.dark{
+                border-top: 1px solid $border-dark;
+                border-bottom   : 1px solid $border-dark;
+            }
+            &.light{
+                border-top: 1px solid $border-light;
+                border-bottom   : 1px solid $border-light;
+            }
+        }
+
+        .btn_danger
+        {
+            border: 1px solid $red;
+            color: $red;
+            &:hover
+            {
+                background: #d71d1d1c;
+            }
+        }
+
+        .logout_zone
+        {
+            
+            &.dark{
+                border-bottom: 1px solid $border-dark;
+            }
+            &.light{
+                border-bottom: 1px solid $border-light;
+            }
+            padding-bottom: 2rem;
+        }
+    }
+}
+
+.modale{
+    position: fixed;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 2rem;
+    border-radius: 3px;
+    min-width: 350px;
+    width: 90%;
+    max-width: 500px;
+
+    &.confirmation
+    {
+        max-width: 350px;
+    }
+
+    &.dark{
+        background: #191919;
+        p{
+            color: $light-gray1-left;
+        }   
+    }
+    &.light{
+        background: white;
+        p{
+            color: $dark-gray-main;
+        }   
+    }
+
+    input[type="password"],input[type="email"]    
+    {
+        width: 100%;
+        padding: .5rem 1rem;
+        border-radius: 3px;
+        border: none;
+        outline: none;
+        display: block;
+        &.dark{
+            background: $dark-gray-right;
+            color: white;
+        }
+        &.light
+        {
+            background: $light-gray-right;
+            border: 1px solid lightgray;
+            color: $dark-gray-main;
+        }
+    }
+
+    p{
+        margin: 1.5rem 0;
+        font-size: .9rem;
+    }
+    
+    .submit
+    {
+        margin: 1rem 0;
+        padding: .5rem 1rem;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+        font-weight: 500;
+        color: white;
+        background: #3399FF;
+        cursor: pointer;
+    }
+    form div{
+        margin: 1rem 0;
+        label{
+            font-size: .9rem;
+            display: block;
+            margin-bottom: .5rem;
+            &.dark{
+                color: rgb(133, 133, 133);
+            }
+            &.light{
+                color: rgb(133, 133, 133);
+            }
+        }
+    }
+    
+    form .errorMessage
+    {
+        margin: 0;
+        color: $red;
+        font-weight: 400;
+    }
+
+    .passwordChandedP
+    {
+        font-size: 1rem;
+        text-align: center;
+        &.dark{
+            color: $light-gray1-left;
+        }
+        &.light{
+            color: $dark-gray-main;
+        }
+
+    }
+    .okay
+    {
+        width: 100%;
+        padding: .5rem;
+        margin-top: 1.5rem;
+        cursor: pointer;
+    }
+}
+
+.layer
+{
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: black;
+    opacity: 0.5;
+}

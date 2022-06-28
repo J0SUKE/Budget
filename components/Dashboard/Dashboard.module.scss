@@ -799,6 +799,7 @@ $red:#d71d1d;
         font-size: .7rem;
         font-weight: 500;
         margin-bottom: 2rem;
+        margin-top: .5rem;
         &.light{
             color: $dark-gray-right;
         }
@@ -899,20 +900,21 @@ $red:#d71d1d;
         height: 110px;
         padding: 0 2rem;
         button{
-            background: $red;
-            border: none;
+            background: transparent;
+            border: 2px solid $red;
+            //border: none;
             outline: none;
             font-size: 1.1rem;
             font-weight: 500;
             margin-bottom: .5rem;
-            color: white;
+            color: $red;
             width: 100%;
             padding: 1rem 0;
             border-radius: 10px;
             cursor: pointer;
             &:hover
             {
-                opacity: 0.5;
+                background-color: rgba(215, 29, 29, 0.141);
             }
         }
     }

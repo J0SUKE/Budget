@@ -15,10 +15,6 @@ export default function SignupPage()
     const router = useRouter()
     const {setUser} = useContext(userContext);
     
-    function AddUserToDb() {
-        
-    }
-
 
     function signIn(e) {
         e.preventDefault();
@@ -68,7 +64,7 @@ export default function SignupPage()
   }
   
 
-function verifyPassword(password,setErrorMessage) 
+export function verifyPassword(password,setErrorMessage) 
 {
     
     if (password.length<6) 

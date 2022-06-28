@@ -1,4 +1,4 @@
-import {userContex} from '../../../Context/UserContext';
+import Link from "next/link";
 import { useContext, useState } from "react";
 import {userContext} from '../../../Context/UserContext';
 import {ThemeCntxt} from '../../../Context/ThemeContext';
@@ -22,14 +22,19 @@ export default function LateralMenu({visible,setVisible}) {
             </button>
           </div>
           <ul>
-            <li className={`${dark ? style.dark : style.light}`}>
-                <img src="/images/user.svg" alt="" />
-                <p>My account</p>
-            </li>
-            <li className={`${dark ? style.dark : style.light}`}>
-                <img src="/images/cog.svg" alt="" />
-                <p>Settings</p>
-            </li>
+            <Link href={'/settings'}>
+              <li className={`${dark ? style.dark : style.light}`}>
+                  <img src="/images/user.svg" alt="" />
+                  <p>My account</p>
+              </li>
+            </Link>
+            <Link href={'/settings'}>
+              <li className={`${dark ? style.dark : style.light}`}>
+                  <img src="/images/cog.svg" alt="" />
+                  <p>Settings</p>
+              </li>
+            </Link>
+            
           </ul>
         </nav>
       </aside>
