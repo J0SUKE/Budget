@@ -59,6 +59,9 @@ export default function ModifyBudgetModale({modifyBudgetModale,budgets,setBudget
         }
         else return item;
       }))
+
+      setModifyBudgetModale(false);
+
     }).catch((error)=>{
       console.log(error);
     })

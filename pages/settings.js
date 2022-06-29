@@ -51,11 +51,10 @@ export default function SettingsPage() {
 
         let updateUserEmail = updateDoc(userDoc,{
           email:emailInput.current.value
+        }).then(()=>{
+          router.push('/login');
         })
-        setUser({
-          ...user,
-          email:emailInput.current.value
-        })
+        
     }).catch((error)=>{
       if (error.code == "auth/email-already-in-use") {
         setErrorMessage("This email is already in use ");

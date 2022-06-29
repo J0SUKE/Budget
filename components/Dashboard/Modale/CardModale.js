@@ -35,8 +35,6 @@ export default function CardModale({setCardsModale,setCards,cards}) {
             color:colorInput.current.value,
             lastUse:new Date().getTime(),
             createdAt:new Date().getTime()  
-          }).then((docRef)=>{
-            console.log(docRef);
           }).then(()=>{
             setCards((cards)=>([
                 {
@@ -47,6 +45,8 @@ export default function CardModale({setCardsModale,setCards,cards}) {
                     createdAt:new Date().getTime()  
                 },...cards
             ]))
+
+            setCardsModale(false);
           })
           .catch((error)=>{
             console.log(error);

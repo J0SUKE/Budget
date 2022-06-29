@@ -8,7 +8,7 @@ import {colors} from '../../../utils/Colors'
 import { ThemeCntxt } from "../../../Context/ThemeContext";
 import style from '../Dashboard.module.scss';
 
-export default function BudgetModale({setBudgets,budgets,cards,total}) {
+export default function BudgetModale({setBudgets,budgets,cards,total,setBudgetsModale}) {
     const {user} = useContext(userContext);
     const {dark} = useContext(ThemeCntxt);
     const defaultNameInput = useRef();
@@ -28,6 +28,7 @@ export default function BudgetModale({setBudgets,budgets,cards,total}) {
 
         if (!checkInput(namevalue,sumInput.current.value,setErrorMessage,budgets,usingCustom)) return;
 
+
         let expDoc = doc(collection(db,`users/${user.uid}/budgets`),`${namevalue}`);
         let expDocAdd = setDoc(expDoc,{
           name:namevalue,
@@ -35,15 +36,17 @@ export default function BudgetModale({setBudgets,budgets,cards,total}) {
           color:(usingCustom ? colorInput.current.value : null),
           lastUse:new Date().getTime(),
           createdAt:new Date().getTime()  
-        }).then(docRef=>{
+        }).then(()=>{
           
-            console.log(docRef);
             setBudgets(exp=>[{
                 name:namevalue,
                 sum:parseFloat(sumInput.current.value),
                 lastUse:new Date().getTime(),
                 color:(usingCustom ? colorInput.current.value : null),
           },...exp])
+
+          setBudgetsModale(false);
+
         }).catch((error)=>{
           console.log(error);
         })

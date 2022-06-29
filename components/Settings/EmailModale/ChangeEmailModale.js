@@ -25,7 +25,7 @@ export default function ChangeEmailModale({user,emailInput,passwordRef,changeEma
             ref={passwordRef}
           />
           
-          <p>Please enter a new email and we will send you a verification code.</p>
+          <p>Please enter a new email (you will be logged out after this operation)</p>
           
           <input 
             className={`${dark ? style.dark : style.light}`} 
@@ -36,7 +36,7 @@ export default function ChangeEmailModale({user,emailInput,passwordRef,changeEma
           {
             errorMessage && <p className={style.errorMessage}>{errorMessage}</p>
           }
-          <input className={style.submit} type="submit" value={'Send verification code'}/>
+          <input className={style.submit} type="submit" value={'Change my email'}/>
         </form>      
       </SettingModaleLayout>
     )

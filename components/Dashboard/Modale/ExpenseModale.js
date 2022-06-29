@@ -22,81 +22,87 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
         e.preventDefault();
         if (!checkInput({nameRef,sumRef,budgetRef,cardRef,dateRef},setErrorMessage,budgets,cards)) return;
 
-        // promesse qui ajoute la depense dans la bdd puis met a jour le state
-        let expDoc = addDoc(collection(db,`users/${user.uid}/expenses`),{
+        addExpenseToFirebase()
+        .then(()=>updateBudgetInFirebase())
+        .then(()=>updateCardInFirebase())
+        .then(()=>setExpenseModale(false))        
+      } 
+
+    function addExpenseToFirebase() {
+      return addDoc(collection(db,`users/${user.uid}/expenses`),{
+        name:nameRef.current.value,
+        sum:parseFloat(sumRef.current.value),
+        budget:budgetRef.current.value,
+        time:dateRef.current.value,           
+        card:cardRef.current.value,         
+        color:budgets.filter(item=>item.name==budgetRef.current.value)[0].color,
+        createdAt:new Date().getTime()  
+      }).then(docRef=>{
+        
+        setExpenses(exp=>[{
           name:nameRef.current.value,
           sum:parseFloat(sumRef.current.value),
           budget:budgetRef.current.value,
-          time:dateRef.current.value,           
-          card:cardRef.current.value,         
+          card:cardRef.current.value,
+          time:dateRef.current.value,          
           color:budgets.filter(item=>item.name==budgetRef.current.value)[0].color,
-          createdAt:new Date().getTime()  
-        }).then(docRef=>{
-          
-          setExpenses(exp=>[{
-            name:nameRef.current.value,
-            sum:parseFloat(sumRef.current.value),
-            budget:budgetRef.current.value,
-            card:cardRef.current.value,
-            time:dateRef.current.value,          
-            color:budgets.filter(item=>item.name==budgetRef.current.value)[0].color,
-            id:docRef._key.path.segments[3]        
-          },...exp])
-        }).catch((error)=>{
-          console.log(error);
-        })
+          id:docRef._key.path.segments[3]        
+        },...exp])
+      }).catch((error)=>{
+        console.log(error);
+      })
+    }
 
-        
-        let currentBdgt = budgets.filter(item=>item.name==budgetRef.current.value)[0];//budget actuel
+    function updateBudgetInFirebase() {
+      let currentBdgt = budgets.filter(item=>item.name==budgetRef.current.value)[0];//budget actuel
 
-        let budgetDoc = doc(db,`users/${user.uid}/budgets`,`${budgetRef.current.value}`)        
-        
-        // promesse qui met a jour le budget de la derniere depense
+      let budgetDoc = doc(db,`users/${user.uid}/budgets`,`${budgetRef.current.value}`)        
+      
+      // promesse qui met a jour le budget de la derniere depense
 
-        let updateBudget = updateDoc(budgetDoc,{
-          sum:parseFloat(currentBdgt.sum)+parseFloat(sumRef.current.value),
-          lastUse:new Date().getTime()
-        }).then((docRef)=>{
-          
-          
-          setBudgets(budgets=>budgets.map(item=>{
-            if (item.name == budgetRef.current.value) {
-              return ({
-                ...item,                
-                sum:parseFloat(item.sum)+parseFloat(sumRef.current.value),
-                lastUse:new Date().getTime()
-              })
-            }
-            else return item;
-          }).sort((a,b)=>b.lastUse-a.lastUse))
-        }).catch((error)=>{
-          console.log(error);
-        })
+      return updateDoc(budgetDoc,{
+        sum:parseFloat(currentBdgt.sum)+parseFloat(sumRef.current.value),
+        lastUse:new Date().getTime()
+      }).then((docRef)=>{
+        
+        
+        setBudgets(budgets=>budgets.map(item=>{
+          if (item.name == budgetRef.current.value) {
+            return ({
+              ...item,                
+              sum:parseFloat(item.sum)+parseFloat(sumRef.current.value),
+              lastUse:new Date().getTime()
+            })
+          }
+          else return item;
+        }).sort((a,b)=>b.lastUse-a.lastUse))
+      }).catch((error)=>{
+        console.log(error);
+      }) 
+    }
 
-        // promesse qui met a jour le compte de la derniere reponse
-        let currentCard = cards.filter(item=>cardRef.current.value==item.name)[0];//card actuel
-        let cardDoc = doc(db,`users/${user.uid}/cards`,`${currentCard.name}`);
+    function updateCardInFirebase() {
+      let currentCard = cards.filter(item=>cardRef.current.value==item.name)[0];//card actuel
+      let cardDoc = doc(db,`users/${user.uid}/cards`,`${currentCard.name}`);
+      
+      return updateDoc(cardDoc,{
+        balance:parseFloat(currentCard.balance)+parseFloat(sumRef.current.value),
+        lastUse:new Date().getTime()
+      }).then(()=>{
         
-        let updateCard = updateDoc(cardDoc,{
-          balance:parseFloat(currentCard.balance)+parseFloat(sumRef.current.value),
-          lastUse:new Date().getTime()
-        }).then(()=>{
-          
-          setCards(cards=>cards.map(item=>{
-            if (item.name==currentCard.name) {
-              return({
-                ...item,
-                balance:parseFloat(item.balance)+parseFloat(sumRef.current.value),
-                lastUse:new Date().getTime()
-              })
-            }
-            else return item;
-          }).sort((a,b)=>b.lastUse-a.lastUse))
-        
-        })
-        
-        
-      } 
+        setCards(cards=>cards.map(item=>{
+          if (item.name==currentCard.name) {
+            return({
+              ...item,
+              balance:parseFloat(item.balance)+parseFloat(sumRef.current.value),
+              lastUse:new Date().getTime()
+            })
+          }
+          else return item;
+        }).sort((a,b)=>b.lastUse-a.lastUse))
+      
+      }) 
+    }
 
     return (
     <ModaleLayout topLeft={'Add an expense'}>

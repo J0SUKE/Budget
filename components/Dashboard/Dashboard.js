@@ -1,7 +1,6 @@
-import {auth} from '../../firebase/firebase-config';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { collection, addDoc, orderBy,query, where, getDocs,startAfter, limit, doc  } from "firebase/firestore"; 
+import { collection, orderBy,query, getDocs,startAfter, limit, doc  } from "firebase/firestore"; 
 import { db } from '../../firebase/firebase-config';
 import {userContext} from '../../Context/UserContext';
 import LateralMenu from './LateralMenu/LateralMenu';
@@ -12,7 +11,6 @@ import Budgets from './Budgets/Budgets';
 import Hero from './Hero/Hero';
 import Expenses from './Expenses/Expenses';
 import ExpenseModale from './Modale/ExpenseModale';
-import Graphic from './Graphic/Graphic';
 import BudgetModale from './Modale/BudgetModale';
 import CardModale from './Modale/CardModale';
 import Cards from './Cards/Cards';
@@ -248,7 +246,9 @@ export default function Dashboard() {
                 setBudgets={setBudgets} 
                 budgets={budgets} 
                 cards={cards} 
-                total={total}/>
+                total={total}
+                setBudgetsModale={setBudgetsModale}
+            />
           }
 
           {
