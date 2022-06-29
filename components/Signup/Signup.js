@@ -1,9 +1,9 @@
 import GoogleAuth from '../GoogleAuth/GoogleAuth';
 import {LoginHeader} from '../Login/Login';
 import style from './Signup.module.scss';
+import ButtonLoading from '../ButtonLoading/ButtonLoading';
 
-
-export default function Signup({signIn,setEmail,email,password,setPassword,errorMessage,setUser,setErrorMessage}) {
+export default function Signup({signIn,setEmail,email,password,setPassword,errorMessage,setUser,setErrorMessage,isLoading}) {
   return (
     <>
         <LoginHeader/>
@@ -38,7 +38,13 @@ export default function Signup({signIn,setEmail,email,password,setPassword,error
             </div>
             <GoogleAuth message={'Sign in with Google'} setErrorMessage={setErrorMessage} setUser={setUser}/>
             <section>
-                <input type="submit" value='Get Started'/>
+                {
+                    isLoading?
+                    <ButtonLoading/>
+                    :
+                    <input type="submit" value='Get Started'/>
+                }
+                
             </section>
         </form>
         </main>

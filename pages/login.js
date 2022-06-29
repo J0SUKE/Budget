@@ -14,9 +14,21 @@ export default function LoginPage()
   const [errorMessage,setErrorMessage] = useState(null);
   const router = useRouter()
   const {setUser} = useContext(userContext);
+  const [isLoading,setIsloading] = useState(false);
 
   function connect(e) {
     e.preventDefault();
+
+    if (email=="") {
+      setErrorMessage("Please enter a valid email address");
+      return;
+    }
+    if (password=="") {
+      setErrorMessage("Please enter a password");
+      return;
+    }
+
+    setIsloading(true);
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in 
@@ -27,7 +39,7 @@ export default function LoginPage()
     })
     .catch((error) => {
       const errorCode = error.code;
-      const errorMessage = error.message;
+      setIsloading(false);
       console.log(errorCode);
       if (errorCode=="auth/wrong-password") {
         setErrorMessage("Wrong password");
@@ -52,6 +64,7 @@ export default function LoginPage()
         errorMessage={errorMessage}
         setErrorMessage={setErrorMessage}
         setUser={setUser}
+        isLoading={isLoading}
       />      
   )
 }

@@ -14,13 +14,14 @@ export default function SignupPage()
     const [errorMessage,setErrorMessage] = useState(null);
     const router = useRouter()
     const {setUser} = useContext(userContext);
-    
+    const [isLoading,setIsloading] = useState(false);
 
     function signIn(e) {
         e.preventDefault();
 
         if (!verifyPassword(password,setErrorMessage)) return;
 
+        setIsloading(true);
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             setErrorMessage(null);
@@ -35,7 +36,7 @@ export default function SignupPage()
         })
         .catch((error) => {
             
-            console.log(error);
+            setIsloading(false);
             const errorCode = error.code;
             
             if (errorCode=="auth/email-already-in-use") {
@@ -59,6 +60,7 @@ export default function SignupPage()
             errorMessage={errorMessage}            
             setErrorMessage={setErrorMessage}
             setUser={setUser}
+            isLoading={isLoading}
         />
     )
   }

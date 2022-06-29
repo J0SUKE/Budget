@@ -85,7 +85,7 @@ export default function ModifyCardModale({modifyCardModale,setBudgets,setCards,c
       <form onSubmit={modifyCard}>
         <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
           <label htmlFor="">Balance</label>
-          <input type="number" step='0.01' ref={balanceRef}/>
+          <input type="number" step='0.01' ref={balanceRef} placeholder='1000.00'/>
         </div>
         <p 
           className={`${style.warning} ${dark ? style.dark : style.light}`}

@@ -2,6 +2,10 @@ import style from './Settings.module.scss';
 import { userContext } from '../../Context/UserContext';
 import { useContext, useRef, useState } from 'react';
 import {ThemeCntxt} from '../../Context/ThemeContext'
+import ChangeEmailModale from './EmailModale/ChangeEmailModale';
+import ChangePasswordModale from './ChangePasswordModale/ChangePasswordModale';
+import {SuccesPasswordModale} from './ChangePasswordModale/ChangePasswordModale';
+import DeleteUserModale from './DeleteUserModale/DeleteUserModale';
 
 export default function Settings(
     {emailInput,passwordRef,newPasswordRef,currentPasswordRef,deleteAccountEmailRef,deleteAccountPasswordRef,changeEmail,changepassword,logOut,clearUser,sendResetLink}) 
@@ -13,11 +17,12 @@ export default function Settings(
   const [emailChangeModale,setEmailChangeModale] = useState(false);
   const [passwordChangeModale,setPasswordChangeModale] = useState(false);
   const [succesPasswordModale,setSuccesPasswordModale] = useState(false);
+  const [deleteUserModale,setDeleteUserModale] = useState(false);
 
   return (
     <>
       {
-        (emailChangeModale || passwordChangeModale || succesPasswordModale) &&
+        (emailChangeModale || passwordChangeModale || succesPasswordModale || deleteUserModale) &&
         <>
           <div 
             className={style.layer}
@@ -25,6 +30,7 @@ export default function Settings(
               setEmailChangeModale(false);
               setPasswordChangeModale(false);
               setSuccesPasswordModale(false);
+              setDeleteUserModale(false);
             }}
           ></div>
         </>
@@ -43,6 +49,10 @@ export default function Settings(
       {
         succesPasswordModale && <SuccesPasswordModale setSuccesPasswordModale={setSuccesPasswordModale}/>
       }
+      {
+        deleteUserModale && <DeleteUserModale 
+        deleteAccountEmailRef={deleteAccountEmailRef} deleteAccountPasswordRef={deleteAccountPasswordRef} clearUser={clearUser} setDeleteUserModale={setDeleteUserModale}/>
+      }
 
       <div className={`${style.lateral_menu} ${dark ? style.dark : style.light}`}></div>
       <main className={`${style.content} ${dark ? style.dark : style.light}`}>
@@ -59,13 +69,6 @@ export default function Settings(
                 className={`${dark ? style.dark : style.light}`}
                 onClick={()=>setEmailChangeModale(true)}
               >Change email</button>
-            </div>
-            <div className={style.name_zone}>
-              <span className={`${dark ? style.dark : style.light}`}>Preferred name</span>
-              <input 
-                type="text" 
-                className={`${dark ? style.dark : style.light}`}
-              />
             </div>
           </div>
         </div>
@@ -87,171 +90,11 @@ export default function Settings(
           <h3 className={`${dark ? style.dark : style.light}`}>Danger zone</h3>
           <button 
             className={`${style.btn} ${style.btn_danger}`}
+            onClick={()=>setDeleteUserModale(true)}
           >Delete my account</button>
         </div>
-      </section>      
-      {/* <div>
-        <h2>Change email</h2>
-        <form onSubmit={changeEmail}>
-          <label htmlFor="">Email</label>
-          <input type="text" ref={emailInput}/>
-          <input type="submit" value='change'/>
-          <input type="password" ref={passwordRef}/>
-        </form>
-      </div>      
-      <div>
-        <h2>Change password</h2>
-        <form onSubmit={changepassword}>
-          <label htmlFor="">Current password</label>
-          <input type="password" ref={currentPasswordRef}/>
-          <label htmlFor="">New password</label>
-          <input type="password" ref={newPasswordRef}/>
-          <input type="submit" value='change'/>
-          <div>
-            <p>If you forgot your password, you can send a reset Link</p>
-            <button onClick={sendResetLink}>reset my password</button>
-          </div>
-        </form>
-      </div>
-      <div>
-        <h2>Delete my account</h2>
-        <form onSubmit={clearUser}>
-          <div>
-            <label htmlFor="">email</label>
-            <input type="email" ref={deleteAccountEmailRef}/>
-          </div>
-          <div>
-            <label htmlFor="">password</label>
-            <input type="password" ref={deleteAccountPasswordRef}/>
-          </div>
-          <input type="submit" value='Delete my account'/>
-        </form>
-      </div> */}
+      </section>          
       </main>
     </>
   )
 }
-
-function SettingModaleLayout({children,addClass}) {
-  
-  const {dark} = useContext(ThemeCntxt);
-
-  return (
-    <div 
-      className={`${style.modale} ${dark ? style.dark : style.light} ${addClass && addClass }`}
-    >
-      {children}
-    </div>
-  )
-}
-
-function ChangeEmailModale({user,emailInput,passwordRef,changeEmail}) {
-  
-  const {dark} = useContext(ThemeCntxt);
-  const [errorMessage,setErrorMessage] = useState();
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    changeEmail(e,setErrorMessage);
-  }
-
-  return (
-    <SettingModaleLayout>
-      <p>Your current email is <strong>{user.email}</strong>.</p>
-      <form onSubmit={handleSubmit}>
-        <p>Please enter your password.</p>
-        <input 
-          className={`${dark ? style.dark : style.light}`}
-          type="password" 
-          placeholder='Password'
-          ref={passwordRef}
-        />
-        
-        <p>Please enter a new email and we will send you a verification code.</p>
-        
-        <input 
-          className={`${dark ? style.dark : style.light}`} 
-          type="email" 
-          placeholder='Enter new Email'
-          ref={emailInput}
-        />
-        <input className={style.submit} type="submit" value={'Send verification code'}/>
-      </form>      
-    </SettingModaleLayout>
-  )
-}
-
-function ChangePasswordModale({changepassword,newPasswordRef,currentPasswordRef,setPasswordChangeModale,setSuccesPasswordModale}) 
-{
-  const {dark} = useContext(ThemeCntxt); 
-  const [errorMessage,setErrorMessage] = useState();
-  const confirmPasswordRef = useRef();
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    if (newPasswordRef.current.value.length<6) {
-      setErrorMessage('Password must be at least 6 characters');
-      return;
-    }
-
-    if (newPasswordRef.current.value!=confirmPasswordRef.current.value) {
-      setErrorMessage('Your new password does not match.');
-      return;
-    }
-
-    changepassword(e,setErrorMessage,setPasswordChangeModale,setSuccesPasswordModale);
-  }
-  
-  return (
-    <SettingModaleLayout>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label className={`${dark ? style.dark : style.light}`} htmlFor="">Old Password</label>
-          <input 
-            className={`${dark ? style.dark : style.light}`} 
-            ref={currentPasswordRef} 
-            type="password" 
-            placeholder='Enter old password'/>
-        </div>
-        <div>
-          <label className={`${dark ? style.dark : style.light}`} htmlFor="">New password</label>
-          <input 
-            className={`${dark ? style.dark : style.light}`}
-            type="password" 
-            placeholder='Enter new password'
-            ref={newPasswordRef}
-          />
-        </div>
-        <div>
-          <label className={`${dark ? style.dark : style.light}`} htmlFor="">Repeat password</label>
-          <input 
-            className={`${dark ? style.dark : style.light}`} 
-            type="password" 
-            placeholder='Repeat new password'
-            ref={confirmPasswordRef}
-          />
-        </div>
-        {
-          errorMessage && <p className={style.errorMessage}>{errorMessage}</p>
-        }
-        <input className={style.submit} type="submit" value={'Change password'}/>
-      </form>      
-    </SettingModaleLayout>
-  )
-}
-
-function SuccesPasswordModale({setSuccesPasswordModale}) {
-  
-  const {dark} = useContext(ThemeCntxt); 
-  
-  return (
-    <SettingModaleLayout addClass={style.confirmation}>
-      <p className={`${style.passwordChandedP} ${dark ? style.dark : style.light}`}>Your new password has been saved.</p>
-      <button 
-        className={`${style.okay} ${dark ? style.dark : style.light}`}
-        onClick={()=>setSuccesPasswordModale(false)}
-      >Okay</button>
-    </SettingModaleLayout>
-  )
-} 

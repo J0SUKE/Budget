@@ -58,11 +58,11 @@ export default function CardModale({setCardsModale,setCards,cards}) {
         <form onSubmit={addCard}>
             <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
                 <label htmlFor="">Name</label>
-                <input type="text" ref={nameInput}/>
+                <input type="text" ref={nameInput} placeholder='Personal card'/>
             </div>
             <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
                 <label htmlFor="">Balance</label>
-                <input type="number" step='0.01' ref={balanceInput}/>
+                <input type="number" step='0.01' ref={balanceInput} placeholder='1000.00'/>
             </div>
             <div className={`${style.color_field} ${dark ? style.dark : style.light}`}> 
                 <label htmlFor="">Color</label>

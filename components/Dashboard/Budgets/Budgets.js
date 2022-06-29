@@ -21,9 +21,13 @@ export default function Budgets({setExpenseModale,layout,budgets,setBudgetsModal
       <section className={style.budget_section}>
         <div className={`${dark ? style.dark : style.light}`}>
           <h2>Budgets</h2>
-          <button               
+          {
+            budgets.length>3 &&
+            <button               
             onClick={()=>setSeeAllBudgets(seeAllBudgets=>!seeAllBudgets)}
           >{seeAllBudgets ? 'Minimize' : 'See all'}</button>
+          }
+          
         </div>
         <section>
           <ul>

@@ -90,7 +90,7 @@ export default function ModifyBudgetModale({modifyBudgetModale,budgets,setBudget
         <form onSubmit={modifybudget}>
           <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
             <label htmlFor="">Sum</label>
-            <input type="number" step='0.01' ref={sumInput}/>
+            <input type="number" step='0.01' ref={sumInput} placeholder='100.00'/>
           </div>
           {
             !colors[modifyBudgetModale.name] // on ne peut modifier la couleur que si il s'agit d'un custom budget

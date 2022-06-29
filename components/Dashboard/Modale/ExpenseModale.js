@@ -107,15 +107,15 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
           <form onSubmit={addExpense}>
             <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
                 <label htmlFor="">Name</label>
-                <input type="text" ref={nameRef}/>
+                <input type="text" ref={nameRef} placeholder='August rent'/>
             </div>
             <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
                 <label htmlFor="">Sum</label>
-                <input type="number" step='0.01' ref={sumRef}/>
+                <input type="number" step='0.01' ref={sumRef} placeholder='-999.99'/>
             </div>
             <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
               <label htmlFor="">Budget</label>
-              <input list="budgets" ref={budgetRef}/>
+              <input list="budgets" ref={budgetRef} placeholder='Select a budget'/>
               <datalist id="budgets">
                 {
                   budgets.map(item=>(
@@ -126,7 +126,7 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
             </div>
             <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
               <label htmlFor="">Card</label>
-              <input list="cards" ref={cardRef}/>
+              <input list="cards" ref={cardRef} placeholder='Select a card'/>
               <datalist id="cards">
                 {
                   cards.map(item=>(

@@ -77,6 +77,7 @@ export default function BudgetModale({setBudgets,budgets,cards,total}) {
                   list="names" 
                   ref={defaultNameInput} 
                   disabled={usingCustom}
+                  placeholder='Select a budget'
                 />                
                 <datalist id="names">
                   {
@@ -88,7 +89,7 @@ export default function BudgetModale({setBudgets,budgets,cards,total}) {
             </div>
             <div>
               <p className={style.customNameP}>Use a custom name</p>
-              <input type="checkbox" name="custom" onInput={()=>{
+              <input type="checkbox" name="custom"  onInput={()=>{
                 setUsingCustom(custom=>!custom)
               }}/>
             </div>
@@ -98,6 +99,7 @@ export default function BudgetModale({setBudgets,budgets,cards,total}) {
                 type="text" 
                 disabled={!usingCustom}
                 ref={customNameInput}                
+                placeholder={'Gym'}
               />
             </div>
             <div className={`${style.color_field} ${dark ? style.dark : style.light} ${!usingCustom? style.disabled:""}`}>
@@ -106,7 +108,7 @@ export default function BudgetModale({setBudgets,budgets,cards,total}) {
             </div>
             <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>
                 <label htmlFor="">sum</label>
-                <input type="number" step='0.01' ref={sumInput}/>
+                <input type="number" step='0.01' ref={sumInput} placeholder='1000.00'/>
             </div>
             <div className={style.errorMesg}>
               {

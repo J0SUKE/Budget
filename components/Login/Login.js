@@ -1,9 +1,10 @@
 import style from './Login.module.scss';
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import GoogleAuth from '../GoogleAuth/GoogleAuth';
+import ButtonLoading from '../ButtonLoading/ButtonLoading';
 
-export default function Login({connect,email,setEmail,password,setPassword,errorMessage,setErrorMessage,setUser}) {  
+export default function Login({connect,email,setEmail,password,setPassword,errorMessage,setErrorMessage,setUser,isLoading}) {  
     
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -47,8 +48,14 @@ export default function Login({connect,email,setEmail,password,setPassword,error
                 />
             </div>
             <section>
-                <input type="submit" value='Log in'/>
+                {
+                    isLoading ?
+                    <ButtonLoading/>
+                    :
+                    <input type="submit" value='Log in'/>
+                }
             </section>
+            
         </form>
         <span>or</span>
         <GoogleAuth message={'Login with Google'} setUser={setUser} setErrorMessage={setErrorMessage}/>

@@ -311,6 +311,61 @@ $red:#d71d1d;
         margin-top: 1.5rem;
         cursor: pointer;
     }
+
+    .delete_p
+    {
+        font-size: 1rem;
+    }
+    &.delete_modale
+    {
+        max-width: 400px;
+        input[type="submit"]
+        {
+            background: transparent;
+            margin-top: 1rem;
+            width: 100%;
+            padding: .5rem 0;
+            font-size: 1rem;
+            border-radius: 3px;
+            border: 1px solid $red;
+            outline: none;
+            color: $red;
+            cursor: pointer;
+            background: #d71d1d1d;
+        }
+        button{
+            width: 100%;
+            padding: .5rem 0;
+            border-radius: 3px;
+            margin-top: 1rem;
+            cursor: pointer;
+            &.light
+            {
+                border: 1px solid $gray-btns-dark;
+                background: white;
+                color: $dark-gray-main;
+                &:hover
+                {
+                    background: rgb(213, 213, 213);
+                }
+            }
+            &.dark
+            {
+                border: 1px solid $border-dark;
+                background: transparent;
+                color: $light-gray1-left;
+                &:hover
+                {
+                    background: rgba(82, 82, 82, 0.2);
+                }
+            }
+        }
+    }
+
+    &.emailChange .errorMessage
+    {
+        margin-top: 1rem;
+    }
 }
 
 .layer

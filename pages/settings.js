@@ -8,6 +8,7 @@ import { useRouter } from 'next/dist/client/router';
 import { doc,updateDoc,deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase-config';
 import Settings from '../components/Settings/Settings';
+import { ThemeCntxt } from '../Context/ThemeContext';
 
 export default function settings() {
   
@@ -27,16 +28,24 @@ export default function settings() {
   const {user,setUser} = useContext(userContext);
 
 
-
   function changeEmail(e,setErrorMessage) {
     e.preventDefault();
-    
+
+    if (passwordRef.current.value=="") {
+      setErrorMessage('Please type your password') 
+      return;
+    }
+
+    if (emailInput.current.value=="") {
+      setErrorMessage('Please type your new email') ;
+      return;
+    }
+
     signInWithEmailAndPassword(auth,user.email, passwordRef.current.value)
     .then(function(userCredential) {
 
-      updateEmail(userCredential.user,emailInput.current.value);
-      
-    }).then(()=>{
+      updateEmail(userCredential.user,emailInput.current.value)
+      .then(()=>{
 
         let userDoc = doc(db,`users`,`${user.uid}`)                
 
@@ -47,9 +56,23 @@ export default function settings() {
           ...user,
           email:emailInput.current.value
         })
+    }).catch((error)=>{
+      if (error.code == "auth/email-already-in-use") {
+        setErrorMessage("This email is already in use ");
+      }
+      if (error.code == "auth/invalid-email") {
+        setErrorMessage("Please enter a valid email");
+      }
+      console.log(error.code);
+      
     })    
+      
+    })
     .catch(error=>{
-      console.log(error);      
+      if (error.code == "auth/wrong-password") {
+        setErrorMessage("Incorrect password");
+      }      
+      console.log(error.code);      
     })
 
   }
@@ -80,9 +103,14 @@ export default function settings() {
   }
 
 
-  function clearUser(e) {
+  function clearUser(e,setErrorMessage) {
     e.preventDefault();
     
+    if (deleteAccountEmailRef.current.value!=user.email) {
+      setErrorMessage('Wrong email')
+      return;
+    }
+
     signInWithEmailAndPassword(auth,deleteAccountEmailRef.current.value, deleteAccountPasswordRef.current.value)
     .then(userCredential=>deleteUser(userCredential.user))
     .then(res=>{
@@ -91,7 +119,17 @@ export default function settings() {
       router.push('/login');
     })
     .catch(error=>{
-      console.log(error);
+
+      if (error.code=="auth/invalid-email") {
+        setErrorMessage("Invalid email");
+      }
+      if (error.code=="auth/user-not-found") {
+        setErrorMessage("Wrong email");
+      }
+      if (error.code=="auth/wrong-password") {
+        setErrorMessage("Incorrect password");
+      }
+      console.log(error.code);
     })
   }
 
