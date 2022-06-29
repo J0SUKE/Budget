@@ -27,6 +27,64 @@ $red:#d71d1d;
     height: 100vh;
     &.light{background: $light-gray1-left;}   
     &.dark{background: $dark-gray-left;}   
+    padding:1rem 0;
+    &>p{
+        font-weight: 500;
+        padding: 0 1rem;
+        font-size: .9rem;
+        max-width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        &.light{
+            color: $gray-btns-dark;
+        }
+        &.dark{
+            color: $gray-btns-dark;
+        }
+    }
+
+    ul{
+        margin: 1rem 0;
+        li{
+            font-size: .9rem;
+            &.active
+            {
+                &.dark{
+                    background: #333333;
+                }
+                &.light{
+                    background: #E8E7E4
+                }
+            }
+            a{
+                display: flex;
+                padding: .5rem 1rem;
+                align-items: center;
+            }
+            svg{
+                width: 20px;
+            }
+            p{
+                margin-left: .5rem;
+            }
+            cursor: pointer;
+            &.dark{
+                color: $light-gray-right;
+                &:hover
+                {
+                    background: #333333;
+                }
+            }
+            &.light{
+                color: $dark-gray-left;
+                &:hover
+                {
+                    background: #E8E7E4
+                }
+            }
+        }
+    }
 }
 
 .content{

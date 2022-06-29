@@ -22,13 +22,13 @@ export default function LateralMenu({visible,setVisible}) {
             </button>
           </div>
           <ul>
-            <Link href={'/settings'}>
+            <Link href={'/settings#account'}>
               <li className={`${dark ? style.dark : style.light}`}>
                   <img src="/images/user.svg" alt="" />
                   <p>My account</p>
               </li>
             </Link>
-            <Link href={'/settings'}>
+            <Link href={'/settings#settings'}>
               <li className={`${dark ? style.dark : style.light}`}>
                   <img src="/images/cog.svg" alt="" />
                   <p>Settings</p>
