@@ -177,6 +177,11 @@ function SettingSection() {
     document.body.addEventListener('click',()=>{
       setShowMenu(false);
     })
+    document.body.addEventListener("keyup",(e)=>{
+      if (e.key=='Escape') {
+        setShowMenu(false);
+      }
+    })
   },[])
 
   return (

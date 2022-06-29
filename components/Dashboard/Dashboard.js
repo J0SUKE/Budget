@@ -197,7 +197,6 @@ export default function Dashboard() {
 
     return (
     <>
-        <button className={style.toggleTheme} onClick={()=>{setDark(dark=>!dark)}}>toggle</button>
         <Header visible={visible} setVisible={setVisible}/>
         <LateralMenu visible={visible} setVisible={setVisible}/>
         {
