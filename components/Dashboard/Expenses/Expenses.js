@@ -16,7 +16,7 @@ export default function Expenses({expenses,expensesContainer}) {
       <section className={`${style.expenses} ${dark ? style.dark : style.light}`}>
           {
             expenses.length==0 ?
-            <p className={`${dark ? style.dark : style.light}`}>You haven't added any expense yet</p>
+            <p className={`${dark ? style.dark : style.light}`}>You haven&apos;t added any expense yet</p>
             :
             <ul ref={expensesContainer}>
               {
