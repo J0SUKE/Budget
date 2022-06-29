@@ -10,7 +10,7 @@ import { db } from '../firebase/firebase-config';
 import Settings from '../components/Settings/Settings';
 import { ThemeCntxt } from '../Context/ThemeContext';
 
-export default function settings() {
+export default function SettingsPage() {
   
   const router = useRouter();
   
