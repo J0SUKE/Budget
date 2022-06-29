@@ -13,7 +13,7 @@ export default function Settings(
     {emailInput,passwordRef,newPasswordRef,currentPasswordRef,deleteAccountEmailRef,deleteAccountPasswordRef,changeEmail,changepassword,logOut,clearUser,sendResetLink}) 
 {
   const {user} = useContext(userContext);
-  const {dark,setDark} = useContext(ThemeCntxt);
+  const {dark} = useContext(ThemeCntxt);
 
   // modales
   const [emailChangeModale,setEmailChangeModale] = useState(false);
@@ -67,7 +67,6 @@ export default function Settings(
       <LateralMenu settingSection={settingSection}/>
       
       <main className={`${style.content} ${dark ? style.dark : style.light}`}>
-      <button className={style.theme_btn} onClick={()=>setDark(dark=>!dark)}>toggle</button>
       {
         settingSection=='account' ?
         <AccountSection
@@ -170,10 +169,58 @@ function AccountSection({setEmailChangeModale,setPasswordChangeModale,logOut,set
 }
 
 function SettingSection() {
-  const {dark} = useContext(ThemeCntxt);
+  const {dark,setDark} = useContext(ThemeCntxt);
+
+  const [showmenu,setShowMenu] = useState(false);
+
+  useEffect(()=>{
+    document.body.addEventListener('click',()=>{
+      setShowMenu(false);
+    })
+  },[])
+
   return (
     <section>
       <h2 className={`${dark ? style.dark : style.light}`}>My settings</h2>
+      <div className={style.theme_zone}>
+        <div>
+        <h3 className={`${dark ? style.dark : style.light}`}>Appearance</h3>
+        <span className={`${dark ? style.dark : style.light}`}>Customize how Budget looks on your device.</span>
+        </div>
+        <div>
+          <button 
+            className={`${dark ? style.dark : style.light} ${showmenu && style.selected}`}
+            onClick={(e)=>{
+              e.stopPropagation();
+              setShowMenu(true)
+            }}
+          >
+            <p>{dark ? "Dark" : "Light"}</p>
+            <span></span>
+            {
+              showmenu &&
+              <menu className={`${dark ? style.dark : style.light}`}>
+                <ul >
+                  <li className={`${dark ? style.dark : style.light}`} onClick={()=>setDark(true)}>
+                    <p>Dark</p>
+                    {
+                      dark && 
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#0092E4" d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>
+                    }
+                    </li>
+                  <li className={`${dark ? style.dark : style.light}`} onClick={()=>setDark(false)}>
+                    <p>Light</p>
+                    {
+                      !dark &&
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#0092E4" d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/></svg>
+                    }
+                  </li>
+                </ul>
+              </menu>
+            }
+          </button>
+        </div>
+      </div>
     </section>
   )
 }

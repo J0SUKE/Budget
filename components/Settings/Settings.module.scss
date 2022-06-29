@@ -258,8 +258,121 @@ $red:#d71d1d;
             }
             padding-bottom: 2rem;
         }
+
+        .theme_zone
+        {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            
+            button{
+                background: transparent;
+                border: none;
+                outline: none;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                padding: .3rem .6rem;
+                border-radius: 3px;
+                position: relative;
+                &:hover
+                {
+                    background: rgba(137, 137, 137, 0.216);
+                }
+                &>span{
+                    display: block;
+                    height: 7px;
+                    width: 7px;
+                    margin-top: .3rem;
+                    //border: 1px solid black;
+                    border-bottom: 2px solid darkgray;
+                    border-right: 2px solid darkgray;
+                    transform: rotate(45deg);
+                    align-self: flex-start;
+                }
+                &>p{
+                    margin-right: .7rem;
+                    font-size: 1rem;
+                }
+                &.light{
+                    p{
+                        color: $dark-gray-main;
+                    }
+                }
+                &.dark{
+                    &>p{
+                        color: $gray-btns-dark;
+                    }
+                }
+                &.selected
+                {
+                    &:hover
+                    {
+                        background: transparent;
+                    }
+                }
+
+                menu{
+                    position: absolute;
+                    width: 200px;
+                    background: white;
+                    right: 100%;
+                    border-radius: 5px;
+                    padding: .5rem;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.393);
+
+                    &.light{
+                        background: white;
+                    }
+                    &.dark{
+                        background: $dark-gray-right;
+                    }
+
+                    ul{
+                        width: 100%;
+                    }
+                    li{
+                        height: 40px;
+                        padding: 0 .5rem;
+                        border-radius: 3px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        svg{
+                            width: 25px;
+                        }
+                        &.light{
+                            background: white;
+                            color: $dark-gray-main;
+                            &:hover
+                            {
+                                background: #D9D9D9;
+                            }
+                            svg path{
+                                fill: $dark-gray-main;
+                            }
+                        }
+                        &.dark{
+                            background: $dark-gray-right;
+                            &:hover
+                            {
+                                background: #333333;
+                            }
+                            color: $gray-btns-dark;
+                            svg path{
+                                fill: $gray-btns-dark;
+                            }
+                        }
+                    }
+                    p{
+                        text-align: left;
+                    }
+                }
+            }
+        }
     }
 }
+
 
 .modale{
     position: fixed;
