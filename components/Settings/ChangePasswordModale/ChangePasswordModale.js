@@ -57,7 +57,9 @@ export default function ChangePasswordModale({changepassword,newPasswordRef,curr
         {
           errorMessage && <p className={style.errorMessage}>{errorMessage}</p>
         }
-        <input className={style.submit} type="submit" value={'Change password'}/>
+        <div className={style.submit}>
+          <input type="submit" value={'Change password'}/>
+        </div>
       </form>      
     </SettingModaleLayout>
   )

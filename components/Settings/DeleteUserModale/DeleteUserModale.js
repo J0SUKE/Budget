@@ -38,7 +38,9 @@ export default function DeleteUserModale({deleteAccountEmailRef,deleteAccountPas
         {
           errorMessage && <p className={style.errorMessage}>{errorMessage}</p>
         }
-        <input  type="submit" value={'Permanently delete account'}/>
+        <div className={style.delete_btn}>
+          <input  type="submit" value={'Permanently delete account'}/>
+        </div>
       </form>
       <button 
         className={`${dark ? style.dark : style.light}`}

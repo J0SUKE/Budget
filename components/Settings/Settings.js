@@ -23,16 +23,27 @@ export default function Settings(
 
   // router
   const router = useRouter();
-  const [settingSection,setSettingSection] = useState(null)
-
+  const [settingSection,setSettingSection] = useState(null);
   useEffect(()=>{
     setSettingSection(router.asPath.split('#')[1]);
   },[router])
 
+  //mobile lateral menu
+  const [mobileLayout,setMobilelayout] = useState(window.innerWidth<=820);
+  const [menuActive,setMenuActive] = useState(false);
+  
+  useEffect(()=>{
+    window.addEventListener('resize',()=>{
+      if (window.innerWidth<=820) setMobilelayout(true);
+      else setMobilelayout(false);
+    })
+    
+  },[])
+
   return (
     <>
       {
-        (emailChangeModale || passwordChangeModale || succesPasswordModale || deleteUserModale) &&
+        (emailChangeModale || passwordChangeModale || succesPasswordModale || deleteUserModale || menuActive) &&
         <>
           <div 
             className={style.layer}
@@ -41,6 +52,7 @@ export default function Settings(
               setPasswordChangeModale(false);
               setSuccesPasswordModale(false);
               setDeleteUserModale(false);
+              setMenuActive(false);
             }}
           ></div>
         </>
@@ -64,8 +76,16 @@ export default function Settings(
         deleteAccountEmailRef={deleteAccountEmailRef} deleteAccountPasswordRef={deleteAccountPasswordRef} clearUser={clearUser} setDeleteUserModale={setDeleteUserModale}/>
       }
 
-      <LateralMenu settingSection={settingSection}/>
-      
+      <LateralMenu settingSection={settingSection} menuActive={menuActive} setMenuActive={setMenuActive}/>
+
+      {
+        mobileLayout &&
+        <button 
+          className={style.mobile_menu}
+          onClick={()=>setMenuActive(true)}
+        ></button>
+      }
+
       <main className={`${style.content} ${dark ? style.dark : style.light}`}>
       {
         settingSection=='account' ?
@@ -85,13 +105,19 @@ export default function Settings(
 }
 
 
-function LateralMenu({settingSection}) {
+function LateralMenu({settingSection,menuActive,setMenuActive}) {
   
   const {user} = useContext(userContext);
   const {dark} = useContext(ThemeCntxt);
 
+  const router = useRouter();
+
+  useEffect(()=>{
+    setMenuActive(false);
+  },[router])
+
   return (
-    <div className={`${style.lateral_menu} ${dark ? style.dark : style.light}`}>
+    <div className={`${style.lateral_menu} ${dark ? style.dark : style.light} ${menuActive && style.active}`}>
         <p className={`${dark ? style.dark : style.light}`}>{user?.email}</p>
         <ul>
           <li className={`${dark ? style.dark : style.light} ${settingSection=='account' && style.active}`}>

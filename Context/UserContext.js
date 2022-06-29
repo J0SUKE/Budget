@@ -21,10 +21,6 @@ export default function UserContext({children}) {
 
 
     useEffect(()=>{
-        // if (initialPage == '/') // si l'utilisateur se rends sur la homepage , pas de redirection
-        // {
-        //     return;
-        // }
             
         if (!JSON.parse(localStorage.getItem('user')) && initialPage!='/') 
         {
@@ -34,6 +30,7 @@ export default function UserContext({children}) {
         {
             // un user est deja enregistré dans le stockage local
             // il faut maintenat verifier si il y'a eu un chagement d'email ou une suppression du compte
+            
             const USER = JSON.parse(localStorage.getItem('user'))
             const userDoc = doc(db, `users`, `${USER.uid}`);
             const getUserDoc = getDoc(userDoc)
@@ -50,6 +47,9 @@ export default function UserContext({children}) {
                 {
                     setUser(JSON.parse(localStorage.getItem('user')));
                 }
+            })
+            .catch((error)=>{
+                console.log(error);
             })
         }
     },[])

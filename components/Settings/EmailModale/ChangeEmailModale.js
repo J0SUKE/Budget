@@ -36,7 +36,9 @@ export default function ChangeEmailModale({user,emailInput,passwordRef,changeEma
           {
             errorMessage && <p className={style.errorMessage}>{errorMessage}</p>
           }
-          <input className={style.submit} type="submit" value={'Change my email'}/>
+          <div className={style.submit}>
+            <input type="submit" value={'Change my email'}/>
+          </div>
         </form>      
       </SettingModaleLayout>
     )
