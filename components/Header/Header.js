@@ -1,7 +1,12 @@
 import Link from 'next/link';
 import styles from './Header.module.scss';
+import { useContext } from 'react';
+import {userContext} from '../../Context/UserContext'
 
 export default function Header() {
+  
+  const {user} = useContext(userContext);
+
   return (
     <header>
         <div className={styles.header}>
@@ -13,7 +18,9 @@ export default function Header() {
             <nav>
                 <Link href={'/login'}><button>Log in</button></Link>
                 <Link href={'/signup'}><button>Sign Up</button></Link>
-                <Link href={'/dashboard'}><button>Dashboard</button></Link>
+                {
+                  user && <Link href={'/dashboard'}><div className={styles.user_btn}>{user.email[0]}</div></Link>
+                }
             </nav>
         </div>
     </header>

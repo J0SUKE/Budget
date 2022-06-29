@@ -3,7 +3,6 @@ import {auth} from '../firebase/firebase-config';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from 'next/router'
 import {userContext} from '../Context/UserContext';
-import Layout from "../components/Layout/Layout";
 import Login from "../components/Login/Login";
 
 export default function LoginPage() 

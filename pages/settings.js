@@ -165,7 +165,11 @@ export default function SettingsPage() {
       }
   },[])
   
-  return <Settings 
+  return (
+    <>
+    {
+      user ?
+      <Settings 
             emailInput={emailInput} 
             passwordRef={passwordRef}
             newPasswordRef={newPasswordRef}
@@ -178,4 +182,9 @@ export default function SettingsPage() {
             clearUser={clearUser}
             sendResetLink={sendResetLink}
           />
+      :
+      null
+    }
+    </>    
+  )  
 }

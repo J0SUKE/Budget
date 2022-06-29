@@ -14,7 +14,6 @@ export default function ThemeContext({children})
 
     useEffect(()=>{
         
-        console.log(localStorage.getItem('dark'));
         if (localStorage.getItem('dark')=='undefined' || localStorage.getItem('dark')=='false') {
             setDark(false)
         }

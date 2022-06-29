@@ -1,7 +1,11 @@
 import styles from './Home.module.scss';
+import Header from '../Header/Header';
 
 export default function Home() {
   return (
-    <h1>Welcome to budget</h1>
+    <>
+      <Header/>
+      
+    </>    
   )
 }
