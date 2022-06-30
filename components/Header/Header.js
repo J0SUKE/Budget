@@ -8,7 +8,7 @@ export default function Header() {
   const {user} = useContext(userContext);
 
   return (
-    <header>
+    <header className={styles.header_container}>
         <div className={styles.header}>
             <Link href={'/'}>
                 <div className={styles.logo}>
@@ -16,10 +16,14 @@ export default function Header() {
                 </div>
             </Link>
             <nav>
-                <Link href={'/login'}><button>Log in</button></Link>
-                <Link href={'/signup'}><button>Sign Up</button></Link>
+                <Link href={'/login'}><a><button>Log in</button></a></Link>
+                <Link href={'/signup'}><a><button>Sign Up</button></a></Link>
                 {
-                  user && <Link href={'/dashboard'}><div className={styles.user_btn}>{user.email[0]}</div></Link>
+                  user && <Link href={'/dashboard'}>
+                    <a>
+                      <div className={styles.user_btn}>{user.email[0]}</div>
+                    </a>
+                  </Link>
                 }
             </nav>
         </div>
