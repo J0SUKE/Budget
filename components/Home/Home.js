@@ -2,7 +2,8 @@ import styles from './Home.module.scss';
 import Header from '../Header/Header';
 import Link from 'next/link';
 import { userContext } from '../../Context/UserContext';
-import { useContext } from 'react';
+import { useContext} from 'react';
+import Bubbles from './Bubbles/Bubbles';
 
 export default function Home() {
   
@@ -68,23 +69,7 @@ export default function Home() {
                   <h3>Monitor your spend</h3>
                   <p>Create a Spend Limit on each service to block hidden fees and double charges on recurring expenses. If a transaction goes over the limit, it will automatically decline.</p>
                 </section>
-                <div className={`${styles.details__content__illustration} ${styles.bubbles}`}>
-                  <div className={styles.bubble} id={styles.bubble1}></div>
-                  <section className={styles.bubble__content}>
-                    <img src="/images/apple.svg" alt="" />
-                    <p>$26.00/mo</p>
-                  </section>  
-                  <div className={styles.bubble} id={styles.bubble2}></div>
-                  <section className={styles.bubble__content}>
-                    <img src="/images/netflix.svg" alt="" />
-                    <p>$30.00/mo</p>
-                  </section>
-                  <div className={styles.bubble} id={styles.bubble3}></div>
-                  <section className={styles.bubble__content}>
-                    <img src="/images/starbucks.svg" alt="" />
-                    <p>$16.00/mo</p>
-                  </section>
-                </div>
+                <Bubbles/>
               </div>
               <div>
                 <section>
@@ -137,7 +122,6 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-
               <div>
                 <section>
                   <h3>Intuitive wallet organisation</h3>

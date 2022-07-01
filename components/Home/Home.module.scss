@@ -362,6 +362,7 @@ $red:#FF2D36;
         margin-top: 3rem;
         &>div{
             background: #F0EEEB;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -382,83 +383,14 @@ $red:#FF2D36;
                     margin: 1rem 0;
                     padding: 0rem 2rem;
                     line-height: 1.7rem;
-                    text-align: center;
+                    text-align: center;;
                     color: rgb(108, 108, 108);
                 }
             }
             
         }
-    }
+    }    
 
-    .details__content__illustration
-    {
-        
-    }
-
-    .bubbles
-    {
-        height: 300px;
-        min-width: 300px;
-        width: 300px;
-        max-width: 300px;
-        position: relative;
-        border: 1px solid black;
-        margin: auto;
-
-        .bubble:first-of-type{
-            top: 20%;
-            left: 10%;
-            transform: scale(1.2);
-        }
-        .bubble__content:nth-of-type(1)
-        {
-            top: 26%;
-            left: 7%;
-        }
-        .bubble:nth-of-type(2){
-            top: 10%;
-            left: 55%;
-            transform: scale(1.4);
-        }
-        .bubble__content:nth-of-type(2)
-        {
-            top: 16%;
-            left: 52%;
-        }
-        .bubble:nth-of-type(3){
-            top: 50%;
-            left: 38%;
-            transform: scale(1);
-        }
-        .bubble__content:nth-of-type(3)
-        {
-            top: 57%;
-            left: 35%;
-        }
-
-
-        .bubble{
-            width: 100px;
-            height: 100px;
-            background: white;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.263);
-            border-radius: 50%;
-            position: absolute;            
-        }
-        .bubble__content{
-            margin: 0;
-            position: absolute;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            p{
-                font-size: .7rem;
-                margin-top: .7rem;
-                color: rgb(78, 78, 78);
-            }
-        }
-
-    }
 
     .spend_limit
     {
