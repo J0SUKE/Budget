@@ -32,7 +32,8 @@ $red:#FF2D36;
         p{
             margin: 3rem 0;
             line-height: 1.7rem;
-            font-size: clamp(.8em,1.2vw,1rem);
+            //font-size: clamp(.8em,1.2vw,1rem);
+            font-size: 1rem;
             padding-right: 2rem;
         }
     }
@@ -86,7 +87,7 @@ $red:#FF2D36;
 
     .card{
         width: 40%;
-        aspect-ratio: 2 / 1;
+        min-width: 150px;
         padding: 1.2rem;
         border-radius: 10px;
         position: absolute;
@@ -94,11 +95,17 @@ $red:#FF2D36;
         flex-direction: column;
         box-shadow: 0px 10px 25px darkgray;
         .card_sim{
-            height: 30px;
+            height: 30px;   
+            min-height: 30px;   
+            max-height: 30px;   
+            min-width: 30px;
             width: 30px;
+            max-width: 30px;
             @media screen and(max-width:500px) {
                 width: 24px;
+                max-width: 24px;
                 height: 24px;
+                max-height: 24px;
             }
             border-radius: 5px;
         }
@@ -733,5 +740,86 @@ $red:#FF2D36;
                 margin-top: 2rem;
             }
         }
+    }
+}
+
+.howItworks
+{
+    width: 80%;
+    margin: 7rem auto;    
+    max-width: 1000px;
+    &__top
+    {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        div p{
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+    }
+    @media screen and(max-width:950px)
+    {
+        &__top
+        {
+            flex-direction: column;
+            align-items: center;
+            p,h2{
+                text-align: center;
+            }
+            button{
+                margin-top: 2rem;
+            }
+        }
+    }
+
+    &__content
+    {
+        display: flex;
+        margin-top: 3rem;
+        justify-content: space-between;
+        align-items: center;
+        &__left
+        {
+            width: 55%;
+            li{
+                display: flex;
+                justify-content: space-between;
+                margin: 1rem 0;
+                opacity: 0.4;
+                cursor: pointer;
+                &.active
+                {
+                    opacity: 1;
+                }
+                p{
+                    width: 70%;
+                    line-height: 1.7rem;
+                }
+            }
+        }
+
+        &__right
+        {
+            width: 40%;
+            img{
+                width: 100%;
+                height: 100%;
+                border-radius: 20px;
+            }
+        }
+
+        @media screen and(max-width:950px) {
+            flex-direction: column;
+            &__right,&__left
+            {
+                width: 100%;
+            }
+            &__right
+            {
+                margin-top: 2rem;
+            }
+        }
+
     }
 }

@@ -22,9 +22,12 @@ export default function UserContext({children}) {
 
     useEffect(()=>{
             
-        if (!JSON.parse(localStorage.getItem('user')) && initialPage!='/') 
+        if (!JSON.parse(localStorage.getItem('user'))) // si pas d'utilisateur
         {
-            router.push('/login');
+            if (initialPage!='/') // si aucun user n'est enregistré et qu'on essaye d'acceder a une autre page que / ==> on redirige vers /login
+            {
+                router.push('/login');    
+            }            
         }
         else
         {
