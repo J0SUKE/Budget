@@ -92,7 +92,42 @@ export default function Home() {
                   <p>Organize your virtual cards in one easy-to-use wallet. Tag each card for quick sorting and selection.</p>
                 </section>
                 <div className={`${styles.details__content__illustration} ${styles.spend_limit}`}>
-                  <div className={styles.expenses_wrapper}></div>
+                  <div className={styles.expenses_wrapper}>
+                    <div className={styles.expense} id={styles.apple}>
+                      <div className={styles.expense__left}>
+                        <img src="/images/apple.svg" alt="" />
+                        <div>
+                          <span>Approved</span>
+                          <p>$ 130.99</p>
+                        </div>
+                        
+                      </div>
+                      <p>2 min ago</p>
+                    </div>
+                    <div className={styles.expense} id={styles.netflix}>
+                      <div className={styles.expense__left}>
+                        <img src="/images/netflix.svg" alt="" />
+                        <div>
+                          <span>Approved</span>
+                          <p>$ 13.99</p>
+                        </div>
+                        
+                      </div>
+                      <p>6 min ago</p>
+                    </div>
+                    <div className={styles.expense} id={styles.starbucks}>
+                      <div className={styles.expense__left}>
+                        <img src="/images/starbucks.svg" alt="" />
+                        <div>
+                          <span>Rejected</span>
+                          <p>$ 42.23</p>
+                        </div>
+                        
+                      </div>
+                      <p>7 min ago</p>
+                    </div>
+
+                  </div>
                   <div className={styles.card}>
                     <h5>Profesional account</h5>
                     <h4>$ 150

@@ -1,3 +1,6 @@
+$green:#52CC7A;
+$red:#FF2D36;
+
 .button{
     padding: 1.3rem 3rem;
     font-weight: 600;
@@ -459,19 +462,322 @@
 
     .spend_limit
     {
-        padding: 0 2rem 4rem 2rem;    
+        padding: 2rem 2rem 4rem 2rem;    
 
         .expenses_wrapper
         {
             height: 50px;
-            border: 1px solid black;
+            position: relative;
+            .expense
+            {
+                height: 100%;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60%;
+                min-width: 220px;
+                background: white;
+                margin: auto;
+                border-radius: 15px;
+                box-shadow: 0 0 10px rgba(72, 72, 72, 0.124);
+                opacity: 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                overflow: hidden;
+                padding: 0 1rem;
+                &__left
+                {
+                    display: flex;
+                    img{
+                        height: 20px;
+                    }
+                    align-items: center;
+                    div{
+                        display: flex;
+                        align-items: center;
+                        position: relative;
+                        span{
+                            display: block;
+                            position: absolute;
+                            margin-left: 12px;
+                            font-weight: 600;
+                            transform: translateY(-200%);
+                            color: white;
+                        }
+                    }
+                    p{
+                        margin-left: .7rem;
+                        font-size: .9rem;
+                        color: rgb(118, 118, 118);
+                    }
+                }        
+                &>P{
+                    margin-left: .7rem;
+                    font-size: .8rem;
+                    color: rgb(83, 83, 83);
+                }
+            }
+            #apple
+            {
+                opacity: 1;
+                animation: apple 20s infinite;
+                @keyframes apple {
+                    0%{
+                        opacity: 0;
+                        transform: translateX(-50%) scale(0.7);
+                        background-color: white;
+                    }2%{
+                        opacity: 1;
+                        background-color: white;
+                        transform: translateX(-50%) scale(1);
+                    }8%{
+                        opacity: 1;
+                        background-color: white;
+                        transform: translateX(-50%) scale(1);
+                    }
+                    10%{
+                        opacity: 1;
+                        background-color: $green;
+                        transform: translateX(-50%) scale(1);
+                    }
+                    25%{
+                        opacity: 1;
+                        background-color: $green;
+                        transform: translateX(-50%) scale(1);
+                    }27%{
+                        opacity: 0;
+                        background-color: $green;
+                        transform: translateX(-50%) scale(0.7);
+                    }
+                    100%{
+                        opacity: 0;
+                        background-color: $green;
+                        transform: translateX(-50%) scale(0.7) ;
+                    }
+                }
+
+                div{
+                    p{
+                        animation: AppleDivP 20s infinite;
+                        @keyframes AppleDivP {
+                            0%{
+                                transform: translateY(0);
+                            }8%{
+                                transform: translateY(0);
+                            }
+                            10%{
+                                transform: translateY(200%);
+                            }100%{
+                                transform: translateY(200%);
+                            }
+                        }
+                    }
+                    span{
+                        animation: AppleDivSpan 20s infinite;
+                        @keyframes AppleDivSpan {
+                            0%{
+                                transform: translateY(-200%);
+                            }8%{
+                                transform: translateY(-200%);
+                            }
+                            10%{
+                                transform: translateY(0%);
+                            }100%{
+                                transform: translateY(0%);
+                            }
+                        }
+                    }
+                }
+            }
+            #netflix
+            {
+                opacity: 1;
+                animation: netflix 20s infinite;
+                @keyframes netflix {
+                    0%{
+                        opacity: 0;
+                        transform: translateX(-50%) scale(0.7);
+                        background-color: white;
+                    }31%{
+                        opacity: 0;
+                        transform: translateX(-50%) scale(0.7);
+                        background-color: white;
+                    }33%{
+                        opacity: 1;
+                        transform: translateX(-50%) scale(1);
+                        background-color: white;
+                    }38%{
+                        opacity: 1;
+                        transform: translateX(-50%) scale(1);
+                        background-color: white;
+                    }40%{
+                        opacity: 1;
+                        transform: translateX(-50%) scale(1);
+                        background-color: $green;
+                    }55%{
+                        opacity: 1;
+                        transform: translateX(-50%) scale(1);
+                        background-color: $green;
+                    }
+                    57%{
+                        opacity: 0;
+                        transform: translateX(-50%) scale(0.7);
+                        background-color: $green;
+                    }
+                    100%{
+                        opacity: 0;
+                        background-color: $green;
+                        transform: translateX(-50%) scale(0.7) ;
+                    }
+                }
+
+                div{
+                    p{
+                        animation: netflixeDivP 20s infinite;
+                        @keyframes netflixeDivP {
+                            0%{
+                                transform: translateY(0);
+                            }38%{
+                                transform: translateY(0);
+                            }
+                            40%{
+                                transform: translateY(200%);
+                            }100%{
+                                transform: translateY(200%);
+                            }
+                        }
+                    }
+                    span{
+                        animation: netflixDivSpan 20s infinite;
+                        @keyframes netflixDivSpan {
+                            0%{
+                                transform: translateY(-200%);
+                            }38%{
+                                transform: translateY(-200%);
+                            }
+                            40%{
+                                transform: translateY(0%);
+                            }100%{
+                                transform: translateY(0%);
+                            }
+                        }
+                    }
+                }
+            }
+            #starbucks
+            {
+                opacity: 1;
+                animation: starbucks 20s infinite;
+                @keyframes starbucks {
+                    0%{
+                        opacity: 0;
+                        transform: translateX(-50%) scale(0.7);
+                        background-color: white;
+                    }
+                    61%{
+                        opacity: 0;
+                        transform: translateX(-50%) scale(0.7);
+                        background-color: white;
+                    }
+                    63%{
+                        opacity: 1;
+                        transform: translateX(-50%) scale(1);
+                        background-color: white;
+                    }
+                    69%{
+                        opacity: 1;
+                        transform: translateX(-50%) scale(1);
+                        background-color: white;
+                    }71%{
+                        opacity: 1;
+                        transform: translateX(-50%) scale(1);
+                        background-color: $red;
+                    }71.5%{
+                        opacity: 1;
+                        transform: translateX(-52%) scale(1);
+                        background-color: $red;
+                    }72%{
+                        opacity: 1;
+                        transform: translateX(-48%) scale(1);
+                        background-color: $red;
+                    }72.5%{
+                        opacity: 1;
+                        transform: translateX(-52%) scale(1);
+                        background-color: $red;
+                    }73%{
+                        opacity: 1;
+                        transform: translateX(-48%) scale(1);
+                        background-color: $red;
+                    }73.5%{
+                        opacity: 1;
+                        transform: translateX(-52%) scale(1);
+                        background-color: $red;
+                    }74%{
+                        opacity: 1;
+                        transform: translateX(-50%) scale(1);
+                        background-color: $red;
+                    }
+                    86%{
+                        opacity: 1;
+                        transform: translateX(-50%) scale(1);
+                        background-color: $red;
+                    }
+                    88%{
+                        opacity: 0;
+                        transform: translateX(-50%) scale(0.7);
+                        background-color: $red;
+                    }
+                    100%{
+                        opacity: 0;
+                        background-color: $green;
+                        transform: translateX(-50%) scale(0.7) ;
+                    }
+                }
+
+                div{
+                    p{
+                        animation: starbucksDivP 20s infinite;
+                        @keyframes starbucksDivP {
+                            0%{
+                                transform: translateY(0);
+                            }69%{
+                                transform: translateY(0);
+                            }
+                            71%{
+                                transform: translateY(200%);
+                            }100%{
+                                transform: translateY(200%);
+                            }
+                        }
+                    }
+                    span{
+                        animation: starbucksDivSpan 20s infinite;
+                        @keyframes starbucksDivSpan {
+                            0%{
+                                transform: translateY(-200%);
+                            }69%{
+                                transform: translateY(-200%);
+                            }
+                            71%{
+                                transform: translateY(0%);
+                            }100%{
+                                transform: translateY(0%);
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
         }
 
         .card{
             background: white;            
             width: 60%;
             min-width: 220px;
-            margin: 2rem auto 0 auto;            
+            margin: 1rem auto 0 auto;            
             border-radius: 4%;
             padding: 1rem;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.294);
