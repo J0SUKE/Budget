@@ -149,7 +149,8 @@ export default function Home() {
         <div className={styles.lastSection__left}>
             <h1>Organize your wallet for free</h1>
             <p>Budget is totally free and does not require you to provide any personal data other than an email address.You can sign up and start using it right away !</p>
-            <button className={styles.button}>Get started</button>
+            <Link href={user ? '/dashboard' :'/login'}><button className={styles.button}>Get started</button></Link>
+            
         </div>
         <div className={styles.lastSection__right}>
             <div className={styles.card}>
