@@ -64,7 +64,7 @@ export default function Home() {
               <div>
                 <section>
                   <h3>Convenient and Easy to Use</h3>
-                  <p>Budget has a simple and intuitive interface designed to help you focus on what's important.No useless options or complex features, only the essentials to quickly achieve what you need.</p>
+                  <p>Budget has a simple and intuitive interface designed to help you focus on what&apos;s important.No useless options or complex features, only the essentials to quickly achieve what you need.</p>
                 </section>
                 <img src="/images/split-landing-hero-extension.webp" alt="" />
               </div>              
