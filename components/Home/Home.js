@@ -195,57 +195,44 @@ export default function Home() {
               <li>
                 <h3>About</h3>
                 <ul>
-                <Link href={'https://jeanmazouni.com/'}>
-                    <a target={'_blank'} rel={'noreferrer'}>
+                    <a href='https://jeanmazouni.com/' target={'_blank'} rel={'noreferrer'}>
                       <li>
                         The developer
                       </li>
                     </a>
-                </Link>
-                <Link href={'https://github.com/J0SUKE/Budget'}>
-                    <a target={'_blank'} rel={'noreferrer'}>
+                    <a href='https://github.com/J0SUKE/Budget' target={'_blank'} rel={'noreferrer'}>
                       <li>
                         The project
                       </li>
                     </a>
-                </Link>
-                <Link href={'https://blog.jeanmazouni.com/blog'}>
-                    <a target={'_blank'} rel={'noreferrer'}>
+                    <a href='https://blog.jeanmazouni.com/blog' target={'_blank'} rel={'noreferrer'}>
                       <li>
                         My Blog
                       </li>
                     </a>
-                </Link>
-
                 </ul>
               </li>
               <li>
                 <h3>Social medias</h3>
                 <ul className={styles.medias}>
-                  <Link href={'https://twitter.com/Jean_mazouni'}>
-                    <a target={'_blank'} rel={'noreferrer'}>
+                    <a href='https://twitter.com/Jean_mazouni' target={'_blank'} rel={'noreferrer'}>
                       <li>
                         <img src="/images/icons/twitter.svg" alt="" />
                         <p>Twitter</p>
                       </li>
                     </a>
-                  </Link>
-                  <Link href={'https://twitter.com/https://www.linkedin.com/in/jean-mazouni-214803242/'}>
-                    <a target={'_blank'} rel={'noreferrer'}>
+                    <a href='https://twitter.com/https://www.linkedin.com/in/jean-mazouni-214803242/' target={'_blank'} rel={'noreferrer'}>
                       <li>
                         <img src="/images/icons/linkedin.svg" alt="" />
                         <p>Linkedin</p>
                       </li>
                     </a>
-                  </Link>
-                  <Link href={'https://github.com/J0SUKE'}>
-                    <a target={'_blank'} rel={'noreferrer'}>
+                    <a href='https://github.com/J0SUKE' target={'_blank'} rel={'noreferrer'}>
                       <li>
                         <img src="/images/icons/github.svg" alt="" />
                         <p>Github</p>
                       </li>
                     </a>
-                  </Link>
                 </ul>
               </li>
             </ul>
