@@ -4,6 +4,10 @@ import Link from 'next/link';
 import { userContext } from '../../Context/UserContext';
 import { useContext, useEffect, useRef, useState} from 'react';
 import Bubbles from './Bubbles/Bubbles';
+import { animated } from 'react-spring'
+import { useTransition } from 'react-spring';
+import Typewriter from 'typewriter-effect';
+
 
 export default function Home() {
   
@@ -141,6 +145,113 @@ export default function Home() {
         </div>
         <HowItWorks/>
       </section>
+      <section className={styles.lastSection}>
+        <div className={styles.lastSection__left}>
+            <h1>Organize your wallet for free</h1>
+            <p>Budget is totally free and does not require you to provide any personal data other than an email address.You can sign up and start using it right away !</p>
+            <button className={styles.button}>Get started</button>
+        </div>
+        <div className={styles.lastSection__right}>
+            <div className={styles.card}>
+              <div className={styles.card__content}>
+                  <img src="/images/music.svg" alt="" />
+                  <div className={styles.card_num}>
+                    <Typewriter
+                      onInit={(typewriter) => {
+                        typewriter.typeString('<p><span>4120</span> <span>2663</span> <span>8347</span> <span>6314</span></p>')
+                          .pauseFor(2500)
+                          .start();
+                      }}
+                      options={{
+                        autoStart: true,
+                        loop: true,
+                        cursor:'',
+                        delay:75
+                      }}
+                    />
+                  </div>         
+                  <div className={styles.card_name}>
+                    <Typewriter
+                      onInit={(typewriter) => {
+                        typewriter.typeString('<div><p>04/24</p><p>413</p></div>')
+                          .pauseFor(2500)
+                          .start();
+                      }}
+                      options={{
+                        autoStart: true,
+                        loop: true,
+                        cursor:'',
+                        delay:75
+                      }}
+                    />  
+                  </div>                    
+              </div>
+            </div>
+        </div>
+      </section>
+      <footer className={styles.footer}>
+        <div className={styles.footer__content}>
+            <ul>
+              <li>
+                <h3>About</h3>
+                <ul>
+                <Link href={'https://jeanmazouni.com/'}>
+                    <a target={'_blank'} rel={'noreferrer'}>
+                      <li>
+                        The developer
+                      </li>
+                    </a>
+                </Link>
+                <Link href={'https://github.com/J0SUKE/Budget'}>
+                    <a target={'_blank'} rel={'noreferrer'}>
+                      <li>
+                        The project
+                      </li>
+                    </a>
+                </Link>
+                <Link href={'https://blog.jeanmazouni.com/blog'}>
+                    <a target={'_blank'} rel={'noreferrer'}>
+                      <li>
+                        My Blog
+                      </li>
+                    </a>
+                </Link>
+
+                </ul>
+              </li>
+              <li>
+                <h3>Social medias</h3>
+                <ul className={styles.medias}>
+                  <Link href={'https://twitter.com/Jean_mazouni'}>
+                    <a target={'_blank'} rel={'noreferrer'}>
+                      <li>
+                        <img src="/images/icons/twitter.svg" alt="" />
+                        <p>Twitter</p>
+                      </li>
+                    </a>
+                  </Link>
+                  <Link href={'https://twitter.com/https://www.linkedin.com/in/jean-mazouni-214803242/'}>
+                    <a target={'_blank'} rel={'noreferrer'}>
+                      <li>
+                        <img src="/images/icons/linkedin.svg" alt="" />
+                        <p>Linkedin</p>
+                      </li>
+                    </a>
+                  </Link>
+                  <Link href={'https://github.com/J0SUKE'}>
+                    <a target={'_blank'} rel={'noreferrer'}>
+                      <li>
+                        <img src="/images/icons/github.svg" alt="" />
+                        <p>Github</p>
+                      </li>
+                    </a>
+                  </Link>
+                </ul>
+              </li>
+            </ul>
+        </div>
+        <p>© Budget 2022. Jean Mazouni all rights reserved</p> 
+      </footer>
     </>    
   )
 }
@@ -150,6 +261,10 @@ function HowItWorks() {
   
   const [current,setCurrent] = useState(1);
   const interval = useRef();
+  const transition = useTransition(current,{
+    from:{opacity:0},
+    enter:{opacity:1},
+  })
 
   function selectListItem(index) {
     setCurrent(index);
@@ -196,16 +311,18 @@ function HowItWorks() {
           </ul>
           <div className={styles.howItworks__content__right}>
               {
-                current==1?
-                <img src="/images/step1.png" alt="" />
-                :
-                current==2?
-                <img src="/images/step2.png" alt="" />
-                :
-                current==3?
-                <img src="/images/step3.png" alt="" />
-                :
-                <img src="/images/step4.png" alt="" />
+                transition((style,item)=>{
+                  return item==1?
+                  <animated.img style={style} src="/images/step1.png" alt="" />
+                  :
+                  item==2?
+                  <animated.img style={style} src="/images/step2.png" alt="" />
+                  :
+                  item==3?
+                  <animated.img style={style} src="/images/step3.png" alt="" />
+                  :
+                  <animated.img style={style} src="/images/step4.png" alt="" />
+                  })
               }
                             
           </div>

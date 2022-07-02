@@ -787,6 +787,7 @@ $red:#FF2D36;
                 justify-content: space-between;
                 margin: 1rem 0;
                 opacity: 0.4;
+                transition: opacity .3s;
                 cursor: pointer;
                 &.active
                 {
@@ -821,5 +822,185 @@ $red:#FF2D36;
             }
         }
 
+    }
+}
+
+.lastSection
+{
+    width: 95%;
+    max-width: 970px;
+    padding: 9% 5%;
+    margin: auto;
+    background: #FDD57E;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: space-between;
+    &__left{
+        width: 50%;
+        h1{
+            font-size: 2.4rem;
+            font-weight: 800;
+        }
+        p{
+            margin: 2rem 0;
+            line-height: 1.5rem;
+        }
+        .button
+        {
+            margin-top: 1rem;
+            background: #232320;
+            font-weight: 500;
+            &:hover
+            {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__right
+    {
+        height: 100%;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .card
+        {
+            width: 334px;
+            height: 215px;
+            border-radius: 30px;
+            background: linear-gradient(180deg,#1ce1ff,#a9feff 10%,#a9feff 90%,#29daff);
+            box-shadow: 0 30px 30px -15px rgb(101 82 43 / 50%), 0 2px 3px 0 rgb(0 0 0 / 15%);
+            position: relative;
+            &::after
+            {
+                content: "";
+                background: #1ee1ff;
+                border-radius: 30px;
+                display: block;
+                position: absolute;
+                z-index:0;
+                top: 1px;
+                right: 1px;
+                bottom: 1px;
+                left: 1px;
+            }
+            &__content{
+                position: absolute;
+                z-index: 1;
+                inset: 0;
+                padding: 3rem 2rem;
+                img{
+                    width: 40px;
+                }
+                color: white;
+                font-weight:700 ;
+                white-space: 2rem;
+                p{
+                    display: flex;
+                    margin-top: 1rem;
+                    font-size: 1.2rem;
+                }
+                span{
+                    display: block;
+                    margin-right: .7rem;
+                }
+                div{
+                    display: flex;
+                    p{
+                        margin-right: 1rem;
+                    }
+                }
+
+                .card_num,.card_name
+                {
+                    height: 2rem;
+                    min-height: 2rem;
+
+                }
+                .card_name
+                {
+                    margin-top: .5rem;
+                }
+            }
+        }
+    }
+
+    @media screen and(max-width:940px) {
+        flex-direction: column;
+        align-items: center;
+        &__left
+        {
+            width: 80%;
+        }
+        &__right
+        {
+            width: 100%;
+            margin-top: 4rem;
+        }
+    }
+    @media screen and(max-width:740px)
+    {
+        padding: 4rem 5%;
+    }
+}
+
+.footer
+{
+    padding: 3rem 0;
+    border-top: 1px solid lightgray;
+    width: 98%;
+    margin: 6rem auto 0 auto;
+    &__content
+    {
+        width: 90%;
+        max-width: 1000px;
+        margin: auto;
+        &>ul{
+            display: flex;
+            gap: 5rem;
+            li{
+                h3{
+                    font-weight: 400;
+                    font-size: 1rem;
+                    color: darkgray;
+                }
+                ul{
+                    margin-top: 2rem;
+                    li{
+                        margin: 1rem 0;
+                        font-size: 1rem;
+                        font-weight: 500;
+                        &:hover
+                        {
+                            color: darkgray;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+
+        .medias
+        {
+            li{
+                //margin: 0;
+                display: flex;
+                align-items: center;
+                p{
+                    margin-left: .6rem;
+                }
+                img{
+                    width: 20px;
+                }
+            }
+        }
+    }
+
+    &>p{
+        font-size: .9rem;
+        width: 90%;
+        max-width: 1000px;
+        margin: 3rem auto 0 auto;
     }
 }
