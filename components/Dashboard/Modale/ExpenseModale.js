@@ -107,8 +107,8 @@ export default function ExpenseModale({setExpenses,budgets,setBudgets,cards,setC
     return (
     <ModaleLayout topLeft={'Add an expense'}>
         {
-          cards.length==0 ?
-          <p>You have to register a card to add expenses</p>
+          (cards.length==0 || budgets.length==0 ) ?
+          <p>You have to register a card and a budget to add expenses</p>
           :
           <form onSubmit={addExpense}>
             <div className={`${style.input_field} ${dark ? style.dark : style.light}`}>

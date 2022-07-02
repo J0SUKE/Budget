@@ -42,7 +42,12 @@ $red:#d71d1d;
     position: fixed;
     width: 300px;
     height: 100vh;
-    z-index: 100;
+    z-index: 2;
+    @media screen and(max-width:820px)
+    {
+        z-index: 100;
+    }
+    
     &.light{background: $light-gray1-left;}   
     &.dark{background: $dark-gray-left;}   
 
@@ -423,7 +428,7 @@ $red:#d71d1d;
 
 .modale{
     position: fixed;
-    z-index: 100;
+    z-index: 1000;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
