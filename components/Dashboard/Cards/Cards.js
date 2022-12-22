@@ -35,7 +35,7 @@ export default function Cards({cards,setModifyCardModale}) {
                                         </Moment></p>                                        
                                     </div>
                                     <div className={`${style.balance} ${dark ? style.dark : style.light}`}>
-                                        $ {abbreviateNumber(parseFloat(item.balance).toFixed(2), 2)}
+                                        $ {parseFloat(item.balance).toFixed(2)}
                                     </div>
                                 </li>
                             )
