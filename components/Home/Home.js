@@ -222,7 +222,7 @@ export default function Home() {
                         <p>Twitter</p>
                       </li>
                     </a>
-                    <a href='https://twitter.com/https://www.linkedin.com/in/jean-mazouni-214803242/' target={'_blank'} rel={'noreferrer'}>
+                    <a href='https://www.linkedin.com/in/jean-mazouni-214803242/' target={'_blank'} rel={'noreferrer'}>
                       <li>
                         <img src="/images/icons/linkedin.svg" alt="" />
                         <p>Linkedin</p>
